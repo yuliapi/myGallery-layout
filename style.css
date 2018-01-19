@@ -1,0 +1,202 @@
+body, html {
+    padding: 0;
+    margin: 0;
+}
+
+header.grid {
+    height: 100px;
+    background-color: #c6c6c6;
+}
+
+.gallery {
+    width: fit-content;
+    margin: auto;
+    display: grid;
+}
+
+.box, .box-vertical {
+    width: 350px;
+    height: 300px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+.box, .box-vertical {
+    background-color: #26A65B;
+    color: white;
+    font-size: 20px;
+}
+
+.last-row {
+    display: grid;
+}
+
+@media only screen and (min-width: 800px) {
+    .last-row {
+        grid-template-areas: "left right";
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-flow: row;
+    }
+
+    .gallery {
+        grid-template-areas: "left right";
+        grid-template-columns: auto auto;
+        grid-auto-flow: column;
+    }
+
+    .gallery-item {
+        grid-area: left;
+        grid-row: auto;
+    }
+
+    .last-row .gallery-item {
+        display: flex;
+        grid-area: auto;
+    }
+    .last-row .gallery-item:nth-child(odd) {
+        justify-content: flex-end;
+    }
+
+    .gallery-item.sm-vertical {
+        grid-area: right;
+        grid-row: span 2;
+    }
+
+    .sm-vertical.sm-push-left {
+        transform: translate(-390px, 0);
+    }
+
+    .sm-horizontal.sm-push-right {
+        transform: translate(290px, 0);
+    }
+
+    .gallery-item.sm-vertical .box {
+        width: 250px;
+        height: 600px;
+    }
+
+    .gallery-item.item1 .box,
+    .gallery-item.item5 .box,
+    .gallery-item.item7 .box,
+    .gallery-item.item11 .box,
+    .gallery-item.item13 .box {
+        margin-bottom: 0;
+    }
+
+    .gallery-item.item2 .box,
+    .gallery-item.item6 .box,
+    .gallery-item.item8 .box,
+    .gallery-item.item12 .box,
+    .gallery-item.item14 .box {
+        margin-top: 0;
+    }
+
+}
+
+@media only screen and (min-width: 1200px) {
+    .sm-vertical.sm-push-left, .sm-horizontal.sm-push-right {
+        transform: none
+    }
+
+    .gallery-item.lg-vertical .box {
+        width: 250px;
+        height: 600px;
+    }
+
+    .sm-vertical.lg-normal .box {
+        width: 350px;
+        height: 300px;
+    }
+
+    .gallery {
+        grid-template-areas: "left middle right";
+        grid-template-columns: 1fr 300px 1fr;
+        grid-auto-flow: column;
+    }
+
+    .gallery-item.item1 {
+        grid-area: left;
+        grid-row: auto;
+    }
+
+    .gallery-item.item2 {
+        grid-area: left;
+        grid-row: auto;
+
+    }
+
+    .gallery-item.item3 {
+        grid-area: middle;
+        grid-row: auto / span 2;
+    }
+
+    .gallery-item.item4 {
+        grid-area: right;
+        grid-row: auto;
+    }
+
+    .gallery-item.item5 {
+        grid-area: right;
+        grid-row: auto;
+    }
+
+    .gallery-item.item6 {
+        grid-area: middle;
+        grid-row: auto / span 2;
+        transform: translate(-390px, 0);
+    }
+
+    .gallery-item.item7, .gallery-item.item9 {
+        grid-area: left;
+        grid-row: auto;
+        transform: translate(290px, 0);
+    }
+
+    .gallery-item.item8, .gallery-item.item10 {
+        grid-area: right;
+        grid-row: auto;
+    }
+
+    .gallery-item.item11, .gallery-item.item13 {
+        grid-area: left;
+        grid-row: auto;
+
+    }
+
+    .gallery-item.item12, .gallery-item.item14 {
+        grid-area: right;
+        grid-row: auto;
+        transform: translate(-290px, 0);
+    }
+
+    .gallery-item.item15 {
+        grid-area: middle;
+        grid-row: auto / span 2;
+        transform: translate(390px, 0);
+    }
+
+    .gallery-item.item1 .box,
+    .gallery-item.item4 .box,
+    .gallery-item.item7 .box,
+    .gallery-item.item8 .box,
+    .gallery-item.item11 .box,
+    .gallery-item.item12 .box {
+        margin-bottom: 0;
+    }
+
+    .gallery-item.item12 .box {
+        margin-top: 20px;
+    }
+
+    .gallery-item.item2 .box,
+    .gallery-item.item5 .box,
+    .gallery-item.item7 .box,
+    .gallery-item.item9 .box,
+    .gallery-item.item10 .box,
+    .gallery-item.item13 .box,
+    .gallery-item.item14 .box {
+        margin-top: 0;
+    }
+
+}

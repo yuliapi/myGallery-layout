@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' type='text/css' href='css/styles.css'>
+    <link rel="icon" href="images/logo.png">
+</head>
+
+<body>
+<header class="grid">
+    <form onsubmit="return validate()" ;>
+        Select number of entries between 1 and 100
+        <input id="number" type="number" name="quantity" min="1" max="100">
+        <button onclick="addContent()">Submit</button>
+    </form>
+</header>
+<div class="gallery" id="myGallery">
+
+
+</div>
+<div class="last-row" id="gallery-last-row">
+</div>
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
