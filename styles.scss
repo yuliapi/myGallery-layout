@@ -1,19 +1,37 @@
+/*Screen size utils*/
 $break-small: 800px;
 $break-large: 1200px;
-$border: 1px solid black;
-$entry-background: #26A65B;
-$color-secondary: #fff;
-$header-background: #a1a1a1;
+
+@mixin adjust-content($media) {
+  @if $media == medium-screen {
+    @media only screen and (min-width: $break-small) and (max-width: $break-large - 1) {
+      @content;
+    }
+  } @else if $media == large-screen {
+    @media only screen and (min-width: $break-large) {
+      @content;
+    }
+  }
+}
+/*Size base*/
 $base-margin: 20px;
-$box-width: 350px;
-$box-height: 300px;
+$padding-base: 5px;
+$horizontal-box-width: 350px;
+$horizontal-box-height: 300px;
 $box-vert-width: 250px;
 $box-vert-height: 600px;
-$sm-vert-push-left: calc(0px - #{$box-width} - #{$base-margin} * 2);
-$sm-hor-push-right: calc(#{$box-width} + #{$base-margin} / 2);
-
-$lg-vert-push-left: calc(0px - #{$box-width} - #{$base-margin} - #{$base-margin});
-$lg-vert-push-right: calc(#{$box-width} + #{$base-margin} + #{$base-margin});
+$box-header-fixed-height: 120px;
+$box-content-fixed-height: 240px;
+/**/
+$base-border: 1px solid black;
+$gallery-item-border: 2px outset rgba(223, 223, 223, 0.13);
+$color-primary: #fff;
+$header-background: #a1a1a1;
+/*Layout and positioning utils*/
+$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
+$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} / 2);
+$lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} - #{$base-margin});
+$lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} + #{$base-margin});
 $lg-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} + #{$base-margin});
 $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} - #{$base-margin});
 @mixin sm-vert-push-left() {
@@ -39,14 +57,11 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} - #{$base-mar
 @mixin lg-hor-push-left() {
   transform: translate($lg-hor-push-left, 0);
 }
-@mixin adjust-content($media) {
-  @if $media == medium-screen {
-    @media only screen and (min-width: $break-small) and (max-width: $break-large - 1) { @content; }
-  }
-  @else if $media == large-screen {
-    @media only screen and (min-width: $break-large) { @content; }
-  }
-}
+
+/**/
+
+
+
 body, html {
   padding: 0;
   margin: 0;
@@ -60,28 +75,50 @@ header.grid {
   height: 100px;
   background-color: $header-background;
 }
+
 /*****************************************Gallery layout****************************/
 .gallery {
   width: fit-content;
   margin: auto;
   display: grid;
+  @include adjust-content(medium-screen) {
+    grid-template-areas: "left right";
+    grid-template-columns: auto auto;
+    grid-auto-flow: column;
+    min-width: 100%;
+  }
+  @include adjust-content(large-screen) {
+    grid-template-areas: "left middle right";
+    grid-template-columns: 1fr 3$horizontal-box-height 1fr;
+    grid-auto-flow: column;
+    min-width: 85%;
+  }
 }
 
 .box {
-  width: $box-width;
-  height: $box-height;
-  border: $border;
+  width: $horizontal-box-width;
+  height: $horizontal-box-height;
+  border: $base-border;
   box-sizing: border-box;
-  margin: $base-margin
+  margin: $base-margin;
+  background-color: white;
+  padding: 0 15px;
+  border: $gallery-item-border;
+  display: grid;
+  grid-template-areas: "head" "content";
+  grid-template-rows: auto $box-content-fixed-height;
 }
 
 .last-row {
   display: grid;
   margin: auto;
-}
-
-@media (min-width: $break-small) {
-  .last-row {
+  @include adjust-content(medium-screen) {
+    .box {
+      width: 100%;
+      margin: $base-margin 0;
+    }
+  }
+  @include adjust-content(large-screen) {
     grid-template-areas: "left right";
     grid-template-columns: repeat(2, 1fr);
     grid-auto-flow: row;
@@ -95,17 +132,15 @@ header.grid {
     .gallery-item:nth-child(odd) {
       justify-content: flex-end;
     }
+
   }
-  .gallery {
-    grid-template-areas: "left right";
-    grid-template-columns: auto auto;
-    grid-auto-flow: column;
-    min-width: 100%;
-  }
-  .gallery-item {
-    grid-area: left;
-    grid-row: auto;
-  }
+}
+
+@media only screen and (min-width: $break-small) {
+  //.gallery-item {
+  //  grid-area: left;
+  //  grid-row: auto;
+  //}
   .vertical,
   .vertical-normal {
     grid-area: right;
@@ -161,15 +196,8 @@ header.grid {
     height: $box-vert-height;
   }
   .vertical-normal .box {
-    width: $box-width;
-    height: $box-height;
-  }
-
-  .gallery {
-    grid-template-areas: "left middle right";
-    grid-template-columns: 1fr 300px 1fr;
-    grid-auto-flow: column;
-    min-width: 85%;
+    width: $horizontal-box-width;
+    height: $horizontal-box-height;
   }
 
   .gallery-item.item1,
@@ -229,7 +257,7 @@ header.grid {
   }
 
   .gallery-item.item12 .box {
-    margin-top: 20px;
+    margin-top: $base-margin;
   }
 
   .item2 .box,
@@ -244,19 +272,8 @@ header.grid {
 }
 
 /*************************Styles for entry-content********************/
-
-.box {
-  background-color: white;
-  padding: 0 15px;
-  border: 2px outset #dfdfdf;
-  border-color: rgba(223, 223, 223, 0.13);
-  display: grid;
-  grid-template-areas: "head" "content";
-  grid-template-rows: auto 240px;
-}
-
 .box-content {
-  border-top: 1px solid black;
+  border-top: $base-border;
   p {
     margin: 0;
     font-size: 14px;
@@ -279,8 +296,7 @@ header.grid {
 
 .entry-photo {
   box-sizing: border-box;
-  padding: 5px;
-  padding-left: 0;
+  padding: $padding-base 0 0 0;
 }
 
 .entry-photo.landscape {
@@ -289,34 +305,21 @@ header.grid {
 
 .entry-text {
   box-sizing: border-box;
-  padding: 14px 0;
+  padding: ($padding-base*3) 0;
   position: relative;
-  height: 100%;
+
   a {
     display: inline-block;
     margin-left: 5px;
     font-size: 14px;
     font-style: italic;
   }
-
 }
 
 .entry-text.landscape {
   height: auto;
   padding: 0;
 }
-
-//
-//.entry-text div {
-//  position: absolute;
-//  bottom: 0;
-//}
-//
-//.entry-text.landscape div {
-//  position: absolute;
-//  right: 0;
-//}
-
 .box-header {
   height: max-content;
   margin: auto 0;
@@ -325,26 +328,23 @@ header.grid {
   }
   .number {
     float: left;
-    margin-right: 20px;
+    margin-right: $base-margin;
   }
   .title {
     display: inline-block;
   }
 }
-
-.vertical .box
-{
-  grid-template-rows: 120px auto;
+.vertical .box {
+  grid-template-rows: $box-header-fixed-height auto;
 
 }
 .vertical-normal .box {
   @include adjust-content(medium-screen) {
-    grid-template-rows: 120px auto;
+    grid-template-rows: $box-header-fixed-height auto;
     .entry-text {
       width: 100%
     }
-    .entry-text,
-    .entry-photo {
+    .entry-text{
       float: none
     }
     .box-header {
@@ -355,14 +355,14 @@ header.grid {
     }
   }
 }
-.normal-vertical .box{
+
+.normal-vertical .box {
   @include adjust-content(large-screen) {
-    grid-template-rows: 120px auto;
+    grid-template-rows: $box-header-fixed-height auto;
     .entry-text {
       width: 100%
     }
-    .entry-text,
-    .entry-photo {
+    .entry-text {
       float: none
     }
     .box-header {
@@ -373,34 +373,14 @@ header.grid {
     }
   }
 }
-
-//
-//.sm-vertical .box.text-only {
-//  grid-template-areas: "top" "middle" "bottom";
-//  grid-template-rows: auto 200px auto;
-//  .box-header {
-//    grid-area: middle;
-//    border: 1px solid black;
-//    border-left: none;
-//    border-right: none;
+//.vertical .box-content.illustrated {
+//  position: relative;
+//  .entry-text {
+//    position: absolute;
+//    bottom: 0;
+//    margin-bottom: $base-margin*2;
 //  }
-//  .box-content {
-//    border: none;
-//  }
-//  .box-content:nth-last-child {
-//    grid-area: bottom;
-//  }
-//
 //}
-
-.vertical .box-content.illustrated {
-  position: relative;
-  .entry-text {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 40px;
-  }
-}
 
 .vertical .box-header {
   text-align: center;
