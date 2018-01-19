@@ -57,11 +57,7 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} - #{$base-mar
 @mixin lg-hor-push-left() {
   transform: translate($lg-hor-push-left, 0);
 }
-
 /**/
-
-
-
 body, html {
   padding: 0;
   margin: 0;
@@ -75,7 +71,6 @@ header.grid {
   height: 100px;
   background-color: $header-background;
 }
-
 /*****************************************Gallery layout****************************/
 .gallery {
   width: fit-content;
@@ -102,7 +97,7 @@ header.grid {
   box-sizing: border-box;
   margin: $base-margin;
   background-color: white;
-  padding: 0 15px;
+  padding: 0 $padding-base*3;
   border: $gallery-item-border;
   display: grid;
   grid-template-areas: "head" "content";
@@ -373,14 +368,6 @@ header.grid {
     }
   }
 }
-//.vertical .box-content.illustrated {
-//  position: relative;
-//  .entry-text {
-//    position: absolute;
-//    bottom: 0;
-//    margin-bottom: $base-margin*2;
-//  }
-//}
 
 .vertical .box-header {
   text-align: center;

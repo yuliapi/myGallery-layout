@@ -3,6 +3,7 @@ const largeBreak = 1200;
 const smallScreenRowCount = 3;
 const largeScreenRowCount = 5;
 const itemsInPeriod = 15;
+const lastRowWidthMediumScreen = '640px'; //counted from sass $horizontal-box-width + $box-vert-width + 2*$base-margin
 
 let viewport;
 window.onload = function () {
@@ -132,7 +133,7 @@ class DisplayEntry {
             if (generalContainer.clientWidth && DisplayUtils.isViewportLarge()) {
                 lastRowContainer.style.width = generalContainer.clientWidth + "px";
             } else if(DisplayUtils.isViewportSmall()) {
-                lastRowContainer.style.width = '640px';
+                lastRowContainer.style.width = lastRowWidthMediumScreen;
             }
             let wrapper = DisplayUtils.createNode('div', "gallery-item");
             this.addInner(wrapper, this.modulus, this.entryNumber);
@@ -162,7 +163,7 @@ class DisplayEntry {
             header.appendChild(hText);
         }
         if (this.entry.photo && this.entry.photo.length > 0) {
-            if (this.isNeedToAdjust()) {
+            if (this.needToAdjust()) {
                 this.adjust()
             }
             let div = firstByClass(parent, 'box-content');
@@ -182,10 +183,12 @@ class DisplayEntry {
         }
     }
 
-    isNeedToAdjust() {
+    needToAdjust() {
         if (DisplayUtils.isVertical(this.modulus) || DisplayUtils.isLargeVertical(this.modulus) && DisplayUtils.isViewportLarge()
             || (DisplayUtils.isNinthItem(this.modulus) || DisplayUtils.isSmallVertical(this.modulus)) && DisplayUtils.isViewportSmall()) {
             return true
+        } else {
+            return false
         }
     }
 
