@@ -132,7 +132,7 @@ class DisplayEntry {
         if (needExtraRow && this.entry.counter >= this.totalEntriesCount - totalModulus) {
             if (generalContainer.clientWidth && DisplayUtils.isViewportLarge()) {
                 lastRowContainer.style.width = generalContainer.clientWidth + "px";
-            } else if(DisplayUtils.isViewportSmall()) {
+            } else if (DisplayUtils.isViewportSmall()) {
                 lastRowContainer.style.width = lastRowWidthMediumScreen;
             }
             let wrapper = DisplayUtils.createNode('div', "gallery-item");
@@ -264,4 +264,39 @@ function addContent() {
         displayEntry.display(generalContainer, lastRowContainer);
 
     }
+}
+/************************************CAROUCEL****************************************************/
+function changeSlide(e) {
+    this.element = e.id;
+    this.parent = document.getElementById(this.element.dataset.parent);
+
+    this.target = this.element.dataset.target;
+
+    let isActive = function (slide) {
+        return slide.classList.contains('active')
+    };
+    let switchActive = function (current, target) {
+        current.classList.remove('active');
+        target.classList.add('active');
+    };
+    let currentActiveNumber;
+    let allSlides = this.parent.getElementsByClassName('carousel-slide');
+    console.log(allSlides[0]);
+
+    for (let i = 0; i < allSlides.length; i++) {
+        let slide = allSlides[i];
+        if (isActive(slide)) {
+            currentActiveNumber = i;
+            break;
+        }
+    }
+    console.log(typeof currentActiveNumber);
+    if (this.target && this.target === 'next') {
+        switchActive(allSlides[currentActiveNumber], allSlides[++currentActiveNumber])
+    } else if (this.target && this.target === 'previous') {
+        switchActive(allSlides[currentActiveNumber], allSlides[--currentActiveNumber])
+    }
+
+
+
 }
