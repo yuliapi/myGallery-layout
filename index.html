@@ -15,12 +15,25 @@
         <button onclick="addContent()">Submit</button>
     </form>
 </header>
-<div class="gallery" id="myGallery">
+<section class="content">
+    <div class="carousel-wrapper">
+        <div id="myCarousel">
+            <div class="carousel-slide slide">
+                <p>First slide</p>
+            </div>
+            <div class="carousel-slide slide active">
+                <p>Second slide</p>
+            </div>
+            <div class="carousel-slide slide">
+                <p>Third slide</p>
+            </div>
+        </div>
 
+    </div>
+    <button class="slide-control" id = "btnPrevious" onclick="changeSlide(this)" data-parent = "myCarousel" data-target="previous">Previous</button>
+    <button class="slide-control" id = "btnNext" onclick="changeSlide(this)" data-parent = "myCarousel" data-target="next">Next</button>
 
-</div>
-<div class="last-row" id="gallery-last-row">
-</div>
+</section>
 <script src="js/script.js"></script>
 
 </body>

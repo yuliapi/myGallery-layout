@@ -368,7 +368,6 @@ header.grid {
     }
   }
 }
-
 .vertical .box-header {
   text-align: center;
 }
@@ -376,4 +375,34 @@ header.grid {
 .vertical .box-header .number {
   float: none;
   margin: 0;
+}
+/**********************************************IndexPage styling************************************/
+.content {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto 80px;
+}
+.carousel-wrapper {
+  border: $base-border;
+  margin-top: $base-margin;
+  height: 420px;
+  grid-column: 3/span 8;
+}
+.slide-control {
+  height: 40px;
+  width: 100px;
+  margin: auto;
+  grid-row: 2;
+}
+.slide-control:first-of-type {
+  grid-column: 5;
+}
+.slide-control:last-of-type {
+  grid-column: 8;
+}
+.slide {
+  display: none
+}
+.slide.active {
+  display: inherit;
 }
