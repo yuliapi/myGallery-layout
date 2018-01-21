@@ -27,6 +27,7 @@ $base-border: 1px solid black;
 $gallery-item-border: 2px outset rgba(223, 223, 223, 0.13);
 $color-primary: #fff;
 $header-background: #a1a1a1;
+$green: #278010;
 /*Layout and positioning utils*/
 $sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
 $sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} / 2);
