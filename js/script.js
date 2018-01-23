@@ -22,7 +22,7 @@ const colorScheme = {
 const shuffleArray = arr => arr.sort(() => Math.random() - 0.5);
 const generalContainer = document.getElementById("myGallery");
 const lastRowContainer = document.getElementById("gallery-last-row");
-const totalEntries = document.getElementById("number").value;
+let totalEntries
 
 let allEntries;
 
@@ -30,18 +30,26 @@ let maxHeaderLength = 20;
 let viewport;
 window.onload = function () {
     viewport = window.innerWidth;
+    let carousel = document.getElementsByClassName('carousel');
+    console.log(carousel)
+    if (carousel.length > 0) {
+        for (let c of carousel) {
+            let myCarousel = new Carousel(c.getAttribute('id'));
+            myCarousel.activate()
+        }
+    }
 };
 
 $(window).resize(function () {
     viewport = window.innerWidth;
-    document.getElementById("myGallery").innerHTML = "";
-    document.getElementById("gallery-last-row").innerHTML = "";
+    DisplayUtils.clearGallery();
     if (allEntries && allEntries.length) {
         console.log('no server request needed');
-        dislpayAllEntries()
+        displayAllEntries()
     } else {
         addContent()
     }
+
 });
 
 function validate() {
@@ -65,6 +73,10 @@ class SeverUtils {
 }
 
 class DisplayUtils {
+    static clearGallery() {
+        document.getElementById("myGallery").innerHTML = "";
+        document.getElementById("gallery-last-row").innerHTML = "";
+    }
 
     static viewportExtraSmall() {
         return viewport < smallBreak
@@ -272,13 +284,13 @@ class DisplayEntry {
 }
 
 function addContent() {
-    document.getElementById("myGallery").innerHTML = "";
-    document.getElementById("gallery-last-row").innerHTML = "";
-
-
+    console.log('adding content');
+    totalEntries = document.getElementById("number").value;
+    DisplayUtils.clearGallery()
+    console.log(totalEntries)
     SeverUtils.getAllEntries(totalEntries, function (data) {
         allEntries = data.data;
-        allEntries = shuffleArray(allEntries);
+        // allEntries = shuffleArray(allEntries);
 
         for (let i = 0; i < allEntries.length; i++) {
             allEntries[i].counter = i;
@@ -290,7 +302,7 @@ function addContent() {
 
 }
 
-function dislpayAllEntries() {
+function displayAllEntries() {
     for (let i = 0; i < allEntries.length; i++) {
         allEntries[i].counter = i;
 
@@ -300,37 +312,65 @@ function dislpayAllEntries() {
 }
 
 /************************************CAROUCEL****************************************************/
-// function changeSlide(e) {
-//     this.element = e.id;
-//     this.parent = document.getElementById(this.element.dataset.parent);
-//
-//     this.target = this.element.dataset.target;
-//
-//     let isActive = function (slide) {
-//         return slide.classList.contains('active')
-//     };
-//     let switchActive = function (current, target) {
-//         current.classList.remove('active');
-//         target.classList.add('active');
-//     };
-//     let currentActiveNumber;
-//     let allSlides = this.parent.getElementsByClassName('carousel-slide');
-//     console.log(allSlides[0]);
-//
-//     for (let i = 0; i < allSlides.length; i++) {
-//         let slide = allSlides[i];
-//         if (isActive(slide)) {
-//             currentActiveNumber = i;
-//             break;
-//         }
-//     }
-//     console.log(typeof currentActiveNumber);
-//     if (this.target && this.target === 'next') {
-//         switchActive(allSlides[currentActiveNumber], allSlides[++currentActiveNumber])
-//     } else if (this.target && this.target === 'previous') {
-//         switchActive(allSlides[currentActiveNumber], allSlides[--currentActiveNumber])
-//     }
-//
-//
-//
-// }
+class Carousel {
+    constructor(e) {
+        this.element = document.getElementById(e);
+        this.slides = this.element.getElementsByClassName('carousel-slide');
+        this.bullets = this.element.getElementsByClassName('progress-bullet');
+        this.links = this.allLinks();
+        this.last = this.slides.length - 1;
+        this.currentActiveNumber = 0;
+    }
+
+    allLinks() {
+        let arr = [];
+        for (let each of this.bullets) {
+            arr.push(each.firstChild);
+        }
+        return arr
+    }
+
+    switchActive(currentNumber, targetNumber) {
+        this.slides[currentNumber].classList.remove('active');
+        this.slides[targetNumber].classList.add('active');
+        this.bullets[currentNumber].classList.remove('active');
+        this.bullets[targetNumber].classList.add('active');
+    }
+
+    activate() {
+        let allNext = this.element.getElementsByClassName('control-next');
+        let allPrev = this.element.getElementsByClassName('control-prev');
+        for (let next of allNext) {
+            next.addEventListener('click', this.nextSlide.bind(this));
+        }
+        for (let prev of allPrev) {
+            prev.addEventListener('click', this.prevSlide.bind(this));
+        }
+        for (let link of this.links) {
+            let target = link.dataset.slide - 1;
+            link.addEventListener('click', this.showSlide.bind(this, target))
+        }
+    }
+
+    showSlide(n) {
+        console.log('link clicked');
+        this.switchActive(this.currentActiveNumber, n);
+        this.currentActiveNumber = n
+    }
+
+    nextSlide() {
+        if (this.currentActiveNumber !== this.last) {
+            this.switchActive(this.currentActiveNumber, this.currentActiveNumber + 1);
+            this.currentActiveNumber++;
+        }
+    }
+
+    prevSlide() {
+        if (this.currentActiveNumber !== 0) {
+            this.switchActive(this.currentActiveNumber, this.currentActiveNumber - 1);
+            this.currentActiveNumber--;
+        }
+    }
+}
+
+

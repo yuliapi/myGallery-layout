@@ -2,7 +2,6 @@
 $break-small: 800px;
 $break-large: 1200px;
 
-
 /*Size base*/
 $base-margin: 10px; /***don't change this. Should be 10px! ***/
 $padding-base: 5px;
@@ -35,13 +34,13 @@ $cake-pink: #FFC9E2;
 /*Layout and positioning utils*/
 //$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
 //$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2);
-$sm-vert-push-left: calc(0px  - #{$horizontal-box-width} - #{$base-margin} * 2 - #{$border-width});
+$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2 - #{$border-width});
 $sm-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} * 5 + #{$border-width});
 //$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} * 2);
-$lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} *2);
-$lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2 );
-$lg-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} *2);
-$lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} *2);
+$lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
+$lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} * 2);
+$lg-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} * 2);
+$lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} * 2);
 @mixin sm-vert-push-left() {
   transform: translate($sm-vert-push-left, 0);
 }
@@ -92,6 +91,7 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} *2);
     }
   }
 }
+
 @mixin adjust-content($media) {
   @if $media == small-screen {
     @media only screen and (max-width: $break-small) {
@@ -119,15 +119,15 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} *2);
     max-height: 200px;
   }
 }
+
 @mixin adjust-transform {
   @include adjust-content(medium-screen) {
     transform: translate(calc(#{$base-margin} * 2.5 + #{$border-width} * 3), 0);
   }
 }
 
-
 /**/
-body, html {
+body, html, ul {
   padding: 0;
   margin: 0;
 }
@@ -137,7 +137,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header.grid {
-  height: 100px;
+  height: 70px;
   background-color: $header-background;
 }
 
@@ -167,7 +167,7 @@ header.grid {
   box-sizing: border-box;
   margin: $base-margin;
   background-color: white;
-  padding: 0 $padding-base*3 $padding-base  $padding-base*3;
+  padding: 0 $padding-base*3 $padding-base $padding-base*3;
   border: $gallery-item-border;
   display: grid;
   grid-template-areas: "head" "content";
@@ -200,6 +200,7 @@ header.grid {
 
   }
 }
+
 .item3, .item9, .item15 {
   @include adjust-transform()
 }
@@ -223,7 +224,7 @@ header.grid {
     @include sm-hor-push-right();
   }
 
-  .item1, .item2, .item7, .item8, .item13, .item14, .item5, .item6, .item11,.item12  {
+  .item1, .item2, .item7, .item8, .item13, .item14, .item5, .item6, .item11, .item12 {
     display: flex;
     justify-content: flex-end;
   }
@@ -323,7 +324,7 @@ header.grid {
     display: flex;
     justify-content: flex-end;
   }
-  .item4, .item8, .item10, .item14, .item5, .item6,.item12   {
+  .item4, .item8, .item10, .item14, .item5, .item6, .item12 {
     display: flex;
     justify-content: initial;
   }
@@ -359,6 +360,7 @@ header.grid {
     max-height: 230px;
   }
 }
+
 .entry-photo {
   box-sizing: border-box;
   padding: $padding-base 0 0 0;
@@ -373,7 +375,7 @@ header.grid {
   box-sizing: border-box;
   padding: ($padding-base*3) 0;
   position: relative;
-    @include overflow-rules-for-text();
+  @include overflow-rules-for-text();
 
   a {
     display: inline-block;
@@ -403,12 +405,14 @@ header.grid {
 
   @include one-line-header ()
 }
+
 .box-header.small {
   .title {
     font-size: 20px;
     display: initial;
   }
 }
+
 .vertical .box {
   grid-template-rows: $box-header-fixed-height auto;
   @include adjust-content(small-screen) {
@@ -452,39 +456,136 @@ header.grid {
 }
 
 /**********************************************IndexPage styling************************************/
-.content {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto 80px;
+.carousel-wrapper {
+  position: relative;
 }
 
-.carousel-wrapper {
+.carousel-body {
   border: $base-border;
-  margin-top: $base-margin;
-  height: 420px;
-  grid-column: 3/span 8;
+  height: calc(100vh - 150px);
+}
+.slide {
+  position: fixed;
+  right: -100vw;
+  width: 100%;
+}
+
+.slide.active {
+  transition: all 1s ease-in-out;
+  right: 0;
+}
+
+.slide:first-child {
+  background: #0ACCAB;
+}
+
+.slide:last-child {
+  background: #00A3A3;
+}
+
+.slide:nth-child(2) {
+  background: #00AAEB;
+}
+
+.slide:nth-child(3) {
+  background: #AB90BB;
+}
+
+.slide:nth-child(4) {
+  background: #C8007D;
+}
+.carousel-progress {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  ul {
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+  }
+  .slide-control {
+    margin-top: 0
+
+  }
+  .slide-control:first-child {
+       float: left;
+     }
+  .slide-control:last-child {
+    float: left;
+  }
+}
+
+.progress-bullet {
+  list-style-type: none;
+  float: left;
+   a {
+     display: inline-block;
+     margin: 20px;
+     height: 10px;
+     width: 10px;
+     border-radius: 50%;
+     background: $cake-pink;
+     transition: all 0.5s ease-in-out;
+   }
+
+}
+
+.progress-bullet.active a {
+  background: $deep-rose;
+  transform: scale(1.5, 1.5);
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 50px);
+  display: grid;
+  grid-template-areas: 'left right';
+  align-items: center;
+  justify-content: space-between;
+
+  .control-next {
+    grid-area: right;
+  }
+  .control-prev {
+    grid-area: left;
+  }
 }
 
 .slide-control {
   height: 40px;
-  width: 100px;
-  margin: auto;
-  grid-row: 2;
+  width: 40px;
+  margin-top: -20px;
+  border-radius: 50%;
+  border-color: transparent;
+  background: transparent;
+  color: $deep-rose;
+  font-size: 20px;
+  outline: none;
+}
+.slide-control span {
+  cursor: pointer;
+  display: inline-block;
+  transform: scale(1.5, 1.5);
+  transition: all 0.5s ease-in-out;
 }
 
-.slide-control:first-of-type {
-  grid-column: 5;
+.control-prev span:before {
+  margin-left: 10px;
+  content: '\00ab';
+}
+.control-next span:before{
+  margin-right: 10px;
+  content: '\00bb';
+}
+.control-prev span:hover  {
+  transform: scale(2.3, 2.3) translateX(-5px);
+}
+.control-next span:hover  {
+
+  transform: scale(2.3, 2.3) translateX(5px);
 }
 
-.slide-control:last-of-type {
-  grid-column: 8;
-}
 
-.slide {
-  display: none;
-}
-
-.slide.active {
-  display: inherit;
-}
 
