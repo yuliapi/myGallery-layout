@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT = 1338;
 
 const chai = require('chai');
 const should = chai.should();

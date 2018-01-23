@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT = 1338;
 
 const chai = require('chai');
 const should = chai.should();
@@ -30,7 +31,7 @@ describe('routes : notes', () => {
                     res.body.status.should.eql('success');
                     res.body.data.length.should.eql(5);
                     res.body.data[0].should.include.keys(
-                        'id', 'header', 'body', 'photo', 'created_datetime', 'updated_datetime'
+                        'id', 'title', 'body', 'photo', 'created_datetime', 'updated_datetime', 'orientation'
                     );
                     done();
                 });
@@ -64,7 +65,7 @@ describe('routes : notes', () => {
                     res.body.status.should.eql('success');
                     res.body.data.length.should.eql(2);
                     res.body.data[0].should.include.keys(
-                        'id', 'header', 'body', 'photo', 'created_datetime', 'updated_datetime'
+                        'id', 'title', 'body', 'photo', 'created_datetime', 'updated_datetime', 'orientation'
                     );
                     done();
                 });

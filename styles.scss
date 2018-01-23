@@ -2,39 +2,46 @@
 $break-small: 800px;
 $break-large: 1200px;
 
-@mixin adjust-content($media) {
-  @if $media == medium-screen {
-    @media only screen and (min-width: $break-small) and (max-width: $break-large - 1) {
-      @content;
-    }
-  } @else if $media == large-screen {
-    @media only screen and (min-width: $break-large) {
-      @content;
-    }
-  }
-}
+
 /*Size base*/
-$base-margin: 20px;
+$base-margin: 10px; /***don't change this. Should be 10px! ***/
 $padding-base: 5px;
+$border-width: 2px;
 $horizontal-box-width: 350px;
 $horizontal-box-height: 300px;
 $box-vert-width: 250px;
-$box-vert-height: 600px;
+$box-vert-height: ($horizontal-box-height + $base-margin) * 2;
+$smbox-header-fixed-height: 56px;
 $box-header-fixed-height: 120px;
 $box-content-fixed-height: 240px;
 /**/
 $base-border: 1px solid black;
-$gallery-item-border: 2px outset rgba(223, 223, 223, 0.13);
+//$gallery-item-border:  1px solid black;
+$gallery-item-border: $border-width solid rgba(223, 223, 223, 0.13);
 $color-primary: #fff;
 $header-background: #a1a1a1;
-$green: #278010;
+$green-grass: #3ACC00;
+$aqua-light: #0ACCAB;
+$agua-dark: #00A3A3;
+$lemon-yellow: #F7E011;
+$orange: #E3900B;
+$deep-rose: #C8007D;
+$sky-blue: #00AAEB;
+$classic-red: #E60000;
+$lavender: #AB90BB;
+$dusty-sand: #F3D0BC;
+$sunset: #DAB3B8;
+$cake-pink: #FFC9E2;
 /*Layout and positioning utils*/
-$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
-$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} / 2);
-$lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} - #{$base-margin});
-$lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} + #{$base-margin});
-$lg-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} + #{$base-margin});
-$lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} - #{$base-margin});
+//$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
+//$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2);
+$sm-vert-push-left: calc(0px  - #{$horizontal-box-width} - #{$base-margin} * 2 - #{$border-width});
+$sm-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} * 5 + #{$border-width});
+//$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} * 2);
+$lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} *2);
+$lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2 );
+$lg-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} *2);
+$lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} *2);
 @mixin sm-vert-push-left() {
   transform: translate($sm-vert-push-left, 0);
 }
@@ -58,6 +65,67 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} - #{$base-mar
 @mixin lg-hor-push-left() {
   transform: translate($lg-hor-push-left, 0);
 }
+
+@mixin one-line-header() {
+  .number {
+    float: left;
+    line-height: 30px;
+    margin-right: $base-margin;
+  }
+  .title {
+    line-height: 30px;
+    display: inline-block;
+  }
+}
+
+@mixin two-line-centered-header() {
+  .entry-text {
+    width: 100%
+  }
+  .entry-text {
+    float: none
+  }
+  .box-header {
+    text-align: center;
+    .number {
+      float: none;
+    }
+  }
+}
+@mixin adjust-content($media) {
+  @if $media == small-screen {
+    @media only screen and (max-width: $break-small) {
+      @content;
+    }
+  }
+  @if $media == medium-screen {
+    @media only screen and (min-width: $break-small) and (max-width: $break-large) {
+      @content;
+    }
+  } @else if $media == large-screen {
+    @media only screen and (min-width: $break-large) {
+      @content;
+    }
+  }
+}
+
+@mixin overflow-rules-for-text() {
+  overflow: hidden;
+  height: 100%;
+  max-height: 254px;
+  width: 100%;
+
+  @include adjust-content(small-screen) {
+    max-height: 200px;
+  }
+}
+@mixin adjust-transform {
+  @include adjust-content(medium-screen) {
+    transform: translate(calc(#{$base-margin} * 2.5 + #{$border-width} * 3), 0);
+  }
+}
+
+
 /**/
 body, html {
   padding: 0;
@@ -72,6 +140,7 @@ header.grid {
   height: 100px;
   background-color: $header-background;
 }
+
 /*****************************************Gallery layout****************************/
 .gallery {
   width: fit-content;
@@ -79,13 +148,13 @@ header.grid {
   display: grid;
   @include adjust-content(medium-screen) {
     grid-template-areas: "left right";
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     grid-auto-flow: column;
     min-width: 100%;
   }
   @include adjust-content(large-screen) {
     grid-template-areas: "left middle right";
-    grid-template-columns: 1fr 3$horizontal-box-height 1fr;
+    grid-template-columns: 1fr ($box-vert-width + $base-margin * 2) 1fr;
     grid-auto-flow: column;
     min-width: 85%;
   }
@@ -98,7 +167,7 @@ header.grid {
   box-sizing: border-box;
   margin: $base-margin;
   background-color: white;
-  padding: 0 $padding-base*3;
+  padding: 0 $padding-base*3 $padding-base  $padding-base*3;
   border: $gallery-item-border;
   display: grid;
   grid-template-areas: "head" "content";
@@ -131,12 +200,11 @@ header.grid {
 
   }
 }
+.item3, .item9, .item15 {
+  @include adjust-transform()
+}
 
 @media only screen and (min-width: $break-small) {
-  //.gallery-item {
-  //  grid-area: left;
-  //  grid-row: auto;
-  //}
   .vertical,
   .vertical-normal {
     grid-area: right;
@@ -155,22 +223,7 @@ header.grid {
     @include sm-hor-push-right();
   }
 
-  .item1 .box,
-  .item5 .box,
-  .item7 .box,
-  .item11 .box,
-  .item13 .box {
-    margin-bottom: 0;
-  }
-
-  .item2 .box,
-  .item6 .box,
-  .item8 .box,
-  .item12 .box,
-  .item14 .box {
-    margin-top: 0;
-  }
-  .item1, .item2, .item7, .item8, .item13, .item14 {
+  .item1, .item2, .item7, .item8, .item13, .item14, .item5, .item6, .item11,.item12  {
     display: flex;
     justify-content: flex-end;
   }
@@ -242,34 +295,44 @@ header.grid {
     grid-row: auto / span 2;
     @include lg-vert-push-right();
   }
-
-  .item1 .box,
-  .item4 .box,
-  .item7 .box,
-  .item8 .box,
-  .item11 .box,
-  .item12 .box {
-    margin-bottom: 0;
-  }
+  //
+  //.item1 .box,
+  //.item4 .box,
+  //.item7 .box,
+  //.item8 .box,
+  //.item11 .box,
+  //.item12 .box {
+  //  margin-bottom: 0;
+  //}
 
   .gallery-item.item12 .box {
     margin-top: $base-margin;
   }
+  //
+  //.item2 .box,
+  //.item5 .box,
+  //.item7 .box,
+  //.item9 .box,
+  //.item10 .box,
+  //.item13 .box,
+  //.item14 .box {
+  //  margin-top: 0;
+  //}
 
-  .item2 .box,
-  .item5 .box,
-  .item7 .box,
-  .item9 .box,
-  .item10 .box,
-  .item13 .box,
-  .item14 .box {
-    margin-top: 0;
+  .item1, .item2, .item7, .item9, .item11, .item13 {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .item4, .item8, .item10, .item14, .item5, .item6,.item12   {
+    display: flex;
+    justify-content: initial;
   }
 }
 
 /*************************Styles for entry-content********************/
 .box-content {
   border-top: $base-border;
+  padding-bottom: 5px;
   p {
     margin: 0;
     font-size: 14px;
@@ -288,8 +351,14 @@ header.grid {
     width: 50%;
     float: left;
   }
+  /*following property is added for presentation project. Should be reviewed in future jar-app*/
+  .entry-text.landscape {
+    max-height: 80px;
+  }
+  .entry-text.landscape.portrait {
+    max-height: 230px;
+  }
 }
-
 .entry-photo {
   box-sizing: border-box;
   padding: $padding-base 0 0 0;
@@ -297,12 +366,14 @@ header.grid {
 
 .entry-photo.landscape {
   padding-right: 0;
+
 }
 
 .entry-text {
   box-sizing: border-box;
   padding: ($padding-base*3) 0;
   position: relative;
+    @include overflow-rules-for-text();
 
   a {
     display: inline-block;
@@ -312,98 +383,108 @@ header.grid {
   }
 }
 
-.entry-text.landscape {
-  height: auto;
-  padding: 0;
+/*following property is added for presentation project. Should be reviewed in future jar-app*/
+
+.entry-photo.portrait-adjusted {
+  @include adjust-content(small-screen) {
+    float: left;
+    margin-right: 5px;
+
+  }
 }
+
+/*********************************************************************************************/
 .box-header {
   height: max-content;
   margin: auto 0;
   h4 {
     font-size: 24px;
   }
-  .number {
-    float: left;
-    margin-right: $base-margin;
-  }
+
+  @include one-line-header ()
+}
+.box-header.small {
   .title {
-    display: inline-block;
+    font-size: 20px;
+    display: initial;
   }
 }
 .vertical .box {
   grid-template-rows: $box-header-fixed-height auto;
+  @include adjust-content(small-screen) {
+    grid-template-rows: $smbox-header-fixed-height auto;
+
+  }
 
 }
+
 .vertical-normal .box {
+  @include adjust-content(small-screen) {
+    grid-template-rows: $smbox-header-fixed-height auto;
+  }
+  @include adjust-content(small-screen) {
+    grid-template-rows: $smbox-header-fixed-height auto;
+  }
+
   @include adjust-content(medium-screen) {
     grid-template-rows: $box-header-fixed-height auto;
-    .entry-text {
-      width: 100%
-    }
-    .entry-text{
-      float: none
-    }
-    .box-header {
-      text-align: center;
-      .number {
-        float: none;
-      }
-    }
+    @include two-line-centered-header()
   }
 }
 
 .normal-vertical .box {
   @include adjust-content(large-screen) {
     grid-template-rows: $box-header-fixed-height auto;
-    .entry-text {
-      width: 100%
-    }
-    .entry-text {
-      float: none
-    }
-    .box-header {
-      text-align: center;
-      .number {
-        float: none;
-      }
-    }
+    @include two-line-centered-header()
   }
 }
+
 .vertical .box-header {
   text-align: center;
+  .number {
+    float: none;
+    margin: 0;
+  }
+  @include adjust-content(small-screen) {
+    text-align: initial;
+    @include one-line-header ()
+  }
 }
 
-.vertical .box-header .number {
-  float: none;
-  margin: 0;
-}
 /**********************************************IndexPage styling************************************/
 .content {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto 80px;
 }
+
 .carousel-wrapper {
   border: $base-border;
   margin-top: $base-margin;
   height: 420px;
   grid-column: 3/span 8;
 }
+
 .slide-control {
   height: 40px;
   width: 100px;
   margin: auto;
   grid-row: 2;
 }
+
 .slide-control:first-of-type {
   grid-column: 5;
 }
+
 .slide-control:last-of-type {
   grid-column: 8;
 }
+
 .slide {
-  display: none
+  display: none;
 }
+
 .slide.active {
   display: inherit;
 }
+
