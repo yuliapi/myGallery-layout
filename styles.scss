@@ -30,7 +30,7 @@ $classic-red: #E60000;
 $lavender: #AB90BB;
 $dusty-sand: #F3D0BC;
 $sunset: #DAB3B8;
-$cake-pink: #FFC9E2;
+$cake-pink: #ffc9e2;
 /*Layout and positioning utils*/
 //$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
 //$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2);
@@ -136,9 +136,74 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-header.grid {
+body {
+  background-image: url("/images/stardust.png");
+}
+
+header {
   height: 70px;
-  background-color: $header-background;
+  margin-bottom: $base-margin;
+  display: grid;
+  grid-template-areas: "left right";
+  color: $cake-pink;
+  font-family: Arial, Helvetica, sans-serif;
+
+  nav {
+    grid-area: left;
+
+    align-self: center;
+    margin-left: $base-margin;
+    ul li {
+      float: left;
+      display: inline-block;
+      margin: $base-margin;
+      height: 50px;
+      width: 100px;
+      text-align: center;
+      line-height: 50px;
+      a {
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid rgba(192, 192, 192, 0);
+        transition: border 300ms ease;
+      }
+    ;
+      a:hover {
+        border-bottom: 1px solid $cake-pink;
+        font-size: 28px;
+        transition: border, font-size 300ms ease;
+
+      }
+
+    }
+  }
+  form {
+    grid-row: 1;
+    grid-area: right;
+    align-self: center;
+    justify-self: end;
+    margin-right: $base-margin;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    input[type = submit] {
+      background: transparent;
+      border: 2px solid  $cake-pink;
+      border-radius: 25px;
+      height: 50px;
+      width: 100px;
+      margin: $base-margin;
+      padding: $padding-base;
+      color: inherit;
+      font-size: inherit;
+    };
+    input[type = submit]:focus {
+      outline: none;
+    }
+  }
 }
 
 /*****************************************Gallery layout****************************/
@@ -461,9 +526,10 @@ header.grid {
 }
 
 .carousel-body {
-  border: $base-border;
+
   height: calc(100vh - 150px);
 }
+
 .slide {
   position: fixed;
   right: -100vw;
@@ -494,6 +560,7 @@ header.grid {
 .slide:nth-child(4) {
   background: #C8007D;
 }
+
 .carousel-progress {
   overflow: hidden;
   display: flex;
@@ -508,8 +575,8 @@ header.grid {
 
   }
   .slide-control:first-child {
-       float: left;
-     }
+    float: left;
+  }
   .slide-control:last-child {
     float: left;
   }
@@ -518,20 +585,20 @@ header.grid {
 .progress-bullet {
   list-style-type: none;
   float: left;
-   a {
-     display: inline-block;
-     margin: 20px;
-     height: 10px;
-     width: 10px;
-     border-radius: 50%;
-     background: $cake-pink;
-     transition: all 0.5s ease-in-out;
-   }
+  a {
+    display: inline-block;
+    margin: 20px;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: rgba(255, 201, 226, 0.35);
+    transition: all 0.5s ease-in-out;
+  }
 
 }
 
 .progress-bullet.active a {
-  background: $deep-rose;
+  background: $cake-pink;
   transform: scale(1.5, 1.5);
 }
 
@@ -560,10 +627,11 @@ header.grid {
   border-radius: 50%;
   border-color: transparent;
   background: transparent;
-  color: $deep-rose;
+  color:  $cake-pink;
   font-size: 20px;
   outline: none;
 }
+
 .slide-control span {
   cursor: pointer;
   display: inline-block;
@@ -575,14 +643,17 @@ header.grid {
   margin-left: 10px;
   content: '\00ab';
 }
-.control-next span:before{
+
+.control-next span:before {
   margin-right: 10px;
   content: '\00bb';
 }
-.control-prev span:hover  {
+
+.control-prev span:hover {
   transform: scale(2.3, 2.3) translateX(-5px);
 }
-.control-next span:hover  {
+
+.control-next span:hover {
 
   transform: scale(2.3, 2.3) translateX(5px);
 }

@@ -30,6 +30,7 @@ let maxHeaderLength = 20;
 let viewport;
 window.onload = function () {
     viewport = window.innerWidth;
+
     let carousel = document.getElementsByClassName('carousel');
     console.log(carousel)
     if (carousel.length > 0) {
@@ -53,6 +54,8 @@ $(window).resize(function () {
 });
 
 function validate() {
+    console.log(this);
+    addContent()
     return false;
 }
 
@@ -284,10 +287,15 @@ class DisplayEntry {
 }
 
 function addContent() {
+    if(window.location.href.indexOf('gallery') === -1) {
+
+        window.location.href = "gallery.html";
+    }
+
     console.log('adding content');
     totalEntries = document.getElementById("number").value;
-    DisplayUtils.clearGallery()
-    console.log(totalEntries)
+    DisplayUtils.clearGallery();
+    console.log(totalEntries);
     SeverUtils.getAllEntries(totalEntries, function (data) {
         allEntries = data.data;
         // allEntries = shuffleArray(allEntries);
