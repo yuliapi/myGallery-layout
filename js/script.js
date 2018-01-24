@@ -18,11 +18,11 @@ const colorScheme = {
     '$dusty-sand': '#F3D0BC',
     '$sunset': '#DAB3B8',
     '$cake-pink': '#FFC9E2'
-}
+};
 const shuffleArray = arr => arr.sort(() => Math.random() - 0.5);
 const generalContainer = document.getElementById("myGallery");
 const lastRowContainer = document.getElementById("gallery-last-row");
-let totalEntries
+let totalEntries;
 
 let allEntries;
 
@@ -30,9 +30,7 @@ let maxHeaderLength = 20;
 let viewport;
 window.onload = function () {
     viewport = window.innerWidth;
-
     let carousel = document.getElementsByClassName('carousel');
-    console.log(carousel)
     if (carousel.length > 0) {
         for (let c of carousel) {
             let myCarousel = new Carousel(c.getAttribute('id'));
@@ -45,7 +43,6 @@ $(window).resize(function () {
     viewport = window.innerWidth;
     DisplayUtils.clearGallery();
     if (allEntries && allEntries.length) {
-        console.log('no server request needed');
         displayAllEntries()
     } else {
         addContent()
@@ -55,7 +52,7 @@ $(window).resize(function () {
 
 function validate() {
     console.log(this);
-    addContent()
+    addContent();
     return false;
 }
 
@@ -67,7 +64,7 @@ function firstByClass(parent, selector) {
 class SeverUtils {
     static getAllEntries(n, callback) {
         $.ajax({
-            url: `http://localhost:1337/api/v1/notes?limit=${n}`
+            url: `/api/v1/notes?limit=${n}`
         }).then(function (data) {
             callback(data);
 
@@ -78,7 +75,10 @@ class SeverUtils {
 class DisplayUtils {
     static clearGallery() {
         document.getElementById("myGallery").innerHTML = "";
-        document.getElementById("gallery-last-row").innerHTML = "";
+        let lastRow = document.getElementById("gallery-last-row");
+        if (lastRow) {
+            lastRow.innerHTML = ""
+        }
     }
 
     static viewportExtraSmall() {
@@ -172,7 +172,6 @@ class DisplayUtils {
         } else {
             return ({width: 153, height: 230});
         }
-
     }
 
     static needToAdjust(modulus, number) {
@@ -184,16 +183,12 @@ class DisplayUtils {
         let viewportSmall = DisplayUtils.isViewportSmall();
         let largeVerticalOnLargeViewport = largeVertical && viewportLarge;
         let smallViewportCondition = (ninthItem || smallVertical) && viewportSmall;
-
         if (vertical || largeVerticalOnLargeViewport || smallViewportCondition) {
             return true
         }
         return false
     }
-
-
 }
-
 
 class DisplayEntry {
     constructor(entry, totalEntriesCount) {
@@ -288,32 +283,32 @@ class DisplayEntry {
 
 function addContent() {
     if(window.location.href.indexOf('gallery') === -1) {
-
         window.location.href = "gallery.html";
     }
-
     console.log('adding content');
-    totalEntries = document.getElementById("number").value;
+    if (totalEntries !== 0) {
+        totalEntries = document.getElementById("number").value;
+    }
+
     DisplayUtils.clearGallery();
-    console.log(totalEntries);
-    SeverUtils.getAllEntries(totalEntries, function (data) {
-        allEntries = data.data;
-        // allEntries = shuffleArray(allEntries);
 
-        for (let i = 0; i < allEntries.length; i++) {
-            allEntries[i].counter = i;
+    if (totalEntries > 0) {
+        SeverUtils.getAllEntries(totalEntries, function (data) {
+            allEntries = data.data;
+            // allEntries = shuffleArray(allEntries);
 
-            let displayEntry = new DisplayEntry(allEntries[i], allEntries.length);
-            displayEntry.display(generalContainer, lastRowContainer);
-        }
-    });
-
+            for (let i = 0; i < allEntries.length; i++) {
+                allEntries[i].counter = i;
+                let displayEntry = new DisplayEntry(allEntries[i], allEntries.length);
+                displayEntry.display(generalContainer, lastRowContainer);
+            }
+        });
+    }
 }
 
 function displayAllEntries() {
     for (let i = 0; i < allEntries.length; i++) {
         allEntries[i].counter = i;
-
         let displayEntry = new DisplayEntry(allEntries[i], allEntries.length);
         displayEntry.display(generalContainer, lastRowContainer);
     }

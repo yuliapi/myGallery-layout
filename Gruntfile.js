@@ -1,12 +1,28 @@
 module.exports = function (grunt) {
-
+    let proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         connect: {
             server: {
-                options: {}
-            }
+                options: {
+                    port: 8000,
+                    hostname: 'localhost',
+
+                    open: true,
+
+
+                    middleware: function (connect, options, defaultMiddleware) {
+                        return [proxySnippet].concat(defaultMiddleware);
+                    }
+                },
+                proxies: [{
+                    context: '/api/v1/',
+                    host: 'localhost',
+                    port: 1337,
+                    changeOrigin: true
+                }]
+            },
         },
         sass: {
             dist: {
@@ -64,8 +80,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-connect-proxy');
 
     // Default task(s).
-    grunt.registerTask('default', ['sass', "postcss", 'connect', 'watch']);
+    grunt.registerTask('default', ['sass', "postcss", 'configureProxies:server', 'connect:server', 'watch']);
 
 };
