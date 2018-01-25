@@ -126,6 +126,56 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} * 2);
   }
 }
 
+@mixin animated-border($color) {
+  position: relative;
+  display: block;
+  padding: 10px;
+  overflow: hidden;
+  &:before {
+    box-sizing: border-box;
+    transform: translateX(100%);
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 99.5%;
+    height: 2px;
+    border-bottom: 2px solid transparent;
+    border-left: 2px solid transparent;
+
+  }
+  &:after {
+    box-sizing: border-box;
+    transform: translateX(-100%);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99.5%;
+    height: 2px;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+
+  }
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+    border-color: transparent;
+  }
+  &:hover:before {
+    transform: translateX(0);
+    height: 100%;
+    transition: .1s transform linear, .1s height linear .1s;
+    border-color: $color;
+  }
+  &:hover:after {
+    transform: translateX(0);
+    height: 100%;
+    transition: .1s transform linear .2s, .1s height linear .3s;
+    border-color: $color;
+  }
+}
+
 /**/
 body, html, ul {
   padding: 0;
@@ -141,66 +191,76 @@ body {
 }
 
 header {
-  height: 70px;
+  //height: 70px;
   margin-bottom: $base-margin;
   display: grid;
   grid-template-areas: "left right";
   color: $cake-pink;
+  border-bottom: 1px solid $cake-pink;
   font-family: Arial, Helvetica, sans-serif;
-
+  @include adjust-content(small-screen) {
+    grid-template-areas: 'top' 'bottom';
+  }
   nav {
     grid-area: left;
-
+    @include adjust-content(small-screen) {
+      grid-area: top;
+    }
     align-self: center;
     margin-left: $base-margin;
     ul li {
-      float: left;
       display: inline-block;
       margin: $base-margin;
-      height: 50px;
-      width: 100px;
-      text-align: center;
-      line-height: 50px;
+      margin-bottom: 0;
       a {
-        font-size: 26px;
+        @include animated-border($cake-pink);
+        font-size: 24px;
         font-weight: 600;
         letter-spacing: 2px;
         text-decoration: none;
         color: inherit;
-        border-bottom: 1px solid rgba(192, 192, 192, 0);
-        transition: border 300ms ease;
-      };
-      a:hover {
-        border-bottom: 1px solid $cake-pink;
-        font-size: 28px;
-        transition: border, font-size 300ms ease;
+      }
+      .active {
+
+        color: #4d4d4d;
+        background-color: $cake-pink;
+        &:hover {
+          color: #4d4d4d;
+        }
       }
     }
   }
-  form {
-    grid-row: 1;
-    grid-area: right;
-    align-self: center;
-    justify-self: end;
-    margin-right: $base-margin;
+}
+
+form {
+
+  @include adjust-content(small-screen) {
+    grid-area: bottom;
+    justify-self: start;
+  }
+  grid-area: right;
+  align-self: center;
+  justify-self: end;
+  margin-right: $base-margin;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  font-weight: 400;
+
+  button {
+    cursor: pointer;
+    background: transparent;
+    border: 2px transparent;
+    border-style: initial;
+    height: 50px;
+    width: 100px;
+    margin: $base-margin;
+    padding: $padding-base;
+    color: inherit;
     font-size: 20px;
-    letter-spacing: 1.5px;
-    font-weight: 400;
-    input[type = submit] {
-      background-color: $cake-pink;
-    }
-    input[type = submit] {
-      background: transparent;
-      border: 2px solid  $cake-pink;
-      border-radius: 25px;
-      height: 50px;
-      width: 100px;
-      margin: $base-margin;
-      padding: $padding-base;
-      color: inherit;
-      font-size: inherit;
-    };
-    input[type = submit]:focus {
+    letter-spacing: 2px;
+    @include animated-border($cake-pink);
+    display: inline-block;
+    &:focus {
       outline: none;
     }
   }
@@ -526,20 +586,66 @@ header {
 }
 
 .carousel-body {
-
   height: calc(100vh - 150px);
 }
 
+$slide-width: 710px;
+
 .slide {
   position: fixed;
+  transition: all 1s ease-in-out;
+  width: $slide-width;
+  height: 450px;
+  @include adjust-content(medium-screen) {
+    width: 500px;
+  }
+}
+
+.slide-right {
   right: -100vw;
-  width: 100%;
+  &.next {
+    right:(calc(-100vw + #{$slide-width}));
+    @include adjust-content(medium-screen) {
+      right:(calc(-100vw + 500px))
+    }
+  }
+}
+
+.slide-left {
+  right: calc(150vw  - #{$slide-width}/4);
+  @include adjust-content(medium-screen) {
+    right:(calc(150vw - 500px/4))
+  }
+  &.previous {
+    right: calc(100vw - (50vw/2 - #{$slide-width}/4));
+    @include adjust-content(medium-screen) {
+      right: calc(100vw - (50vw/2 - 500px/4));
+    }
+  }
 }
 
 .slide.active {
-  transition: all 1s ease-in-out;
-  right: 0;
+  right: calc((50vw - #{$slide-width}/2));
+  @include adjust-content(medium-screen) {
+    right: calc((50vw - 500px/2));
+  }
 }
+
+//
+//.slide.previous {
+//  right: 100vw;
+//
+//
+//  transition: all 1s ease-in-out;
+//}
+
+//.slide.next {
+//  position: initial;
+//  grid-area: right;
+//
+//  width: initial;
+//  transition: all 1s ease-in-out;
+//}
 
 .slide:first-child {
   background: #0ACCAB;
@@ -627,7 +733,7 @@ header {
   border-radius: 50%;
   border-color: transparent;
   background: transparent;
-  color:  $cake-pink;
+  color: $cake-pink;
   font-size: 20px;
   outline: none;
 }

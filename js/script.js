@@ -282,8 +282,8 @@ class DisplayEntry {
 }
 
 function addContent() {
-    if(window.location.href.indexOf('gallery') === -1) {
-        window.location.href = "gallery.html";
+    if (window.location.href.indexOf('index') !== -1) {
+        window.location.replace('gallery.html');
     }
     console.log('adding content');
     if (totalEntries !== 0) {
@@ -322,6 +322,7 @@ class Carousel {
         this.bullets = this.element.getElementsByClassName('progress-bullet');
         this.links = this.allLinks();
         this.last = this.slides.length - 1;
+        this.classList = 'carousel-slide slide';
         this.currentActiveNumber = 0;
     }
 
@@ -333,12 +334,6 @@ class Carousel {
         return arr
     }
 
-    switchActive(currentNumber, targetNumber) {
-        this.slides[currentNumber].classList.remove('active');
-        this.slides[targetNumber].classList.add('active');
-        this.bullets[currentNumber].classList.remove('active');
-        this.bullets[targetNumber].classList.add('active');
-    }
 
     activate() {
         let allNext = this.element.getElementsByClassName('control-next');
@@ -362,18 +357,96 @@ class Carousel {
     }
 
     nextSlide() {
+
         if (this.currentActiveNumber !== this.last) {
+            this.goLeft();
             this.switchActive(this.currentActiveNumber, this.currentActiveNumber + 1);
             this.currentActiveNumber++;
+            this.helperClasses('goForward')
+        }
+    }
+
+    goLeft() {
+        if (this.slides[this.currentActiveNumber + 1].classList.contains('next')) {
+            this.slides[this.currentActiveNumber + 1].classList.remove('next')
+        }
+        if (this.currentActiveNumber !== 0 && this.slides[this.currentActiveNumber - 1].classList.contains('previous')) {
+            this.slides[this.currentActiveNumber - 1].classList.remove('previous')
+        }
+        this.slides[this.currentActiveNumber].classList.add('previous', 'slide-left');
+        if (this.slides[this.currentActiveNumber + 2]) {
+            this.slides[this.currentActiveNumber + 2].classList.add('next');
         }
     }
 
     prevSlide() {
+
+
         if (this.currentActiveNumber !== 0) {
+            this.goRight(this.currentActiveNumber);
             this.switchActive(this.currentActiveNumber, this.currentActiveNumber - 1);
+
             this.currentActiveNumber--;
+            this.helperClasses('goBack');
+
         }
     }
+
+    helperClasses(direction) {
+        if (direction === 'goForward') {
+
+            if (this.slides[this.currentActiveNumber - 1]) {
+                this.slides[this.currentActiveNumber - 1].classList.add('slide-left')
+            }
+            if (this.slides[this.currentActiveNumber - 2] && this.slides[this.currentActiveNumber - 1].classList.contains('slide-right')) {
+                this.slides[this.currentActiveNumber - 2].classList.remove('slide-right')
+            }
+        }
+        if (direction === 'goBack') {
+            if (this.slides[this.currentActiveNumber + 1]) {
+                this.slides[this.currentActiveNumber + 1].classList.add('slide-right')
+            }
+            if (this.slides[this.currentActiveNumber + 2] && this.slides[this.currentActiveNumber + 1].classList.contains('slide-left')) {
+                this.slides[this.currentActiveNumber + 2].classList.remove('slide-left')
+            }
+        }
+    }
+
+    goRight() {
+        console.log("step back" + this.currentActiveNumber);
+
+        if (this.slides[this.currentActiveNumber - 1].classList.contains('previous')) {
+            this.slides[this.currentActiveNumber - 1].classList.remove('previous')
+        }
+        if (this.currentActiveNumber !== 1) {
+            this.slides[this.currentActiveNumber - 2].classList.add('previous');
+        }
+        if (this.slides[this.currentActiveNumber + 1]) {
+            this.slides[this.currentActiveNumber + 1].classList.remove('next');
+        }
+        if (this.currentActiveNumber !== 0) {
+            this.slides[this.currentActiveNumber].classList.add('next');
+        }
+
+
+    }
+
+    switchActive(currentNumber, targetNumber) {
+        if (this.slides[targetNumber].classList.contains('slide-right')) {
+            this.slides[targetNumber].classList.remove('slide-right')
+        }
+        if (this.slides[targetNumber].classList.contains('slide-left')) {
+            this.slides[targetNumber].classList.remove('slide-left')
+        }
+        this.slides[currentNumber].classList.remove('active');
+        if (currentNumber === this.slides.length) {
+            this.slides[currentNumber].classList.add('slide-right');
+        }
+        this.slides[targetNumber].classList.add('active');
+        this.bullets[currentNumber].classList.remove('active');
+        this.bullets[targetNumber].classList.add('active');
+    }
+
 }
 
 
