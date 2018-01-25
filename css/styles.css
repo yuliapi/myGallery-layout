@@ -12,7 +12,8 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0; }
 
 body {
-  background-image: url("/images/stardust.jpg"); }
+  background-color: #444349;
+  background-image: url("/images/stardust.png"); }
 
 header {
   margin-bottom: 10px;
@@ -170,13 +171,13 @@ form {
   width: fit-content;
   margin: auto;
   display: grid; }
-  @media only screen and (min-width: 800px) and (max-width: 1200px) {
+  @media only screen and (min-width: 800px) and (max-width: 1000px) {
     .gallery {
       grid-template-areas: "left right";
       grid-template-columns: 1fr 1fr;
       grid-auto-flow: column;
       min-width: 100%; } }
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 1000px) {
     .gallery {
       grid-template-areas: "left middle right";
       grid-template-columns: 1fr 270px 1fr;
@@ -199,11 +200,11 @@ form {
 .last-row {
   display: grid;
   margin: auto; }
-  @media only screen and (min-width: 800px) and (max-width: 1200px) {
+  @media only screen and (min-width: 800px) and (max-width: 1000px) {
     .last-row .box {
       width: 100%;
       margin: 10px 0; } }
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 1000px) {
     .last-row {
       grid-template-areas: "left right";
       grid-template-columns: repeat(2, 1fr);
@@ -218,7 +219,7 @@ form {
         -webkit-box-pack: end;
                 justify-content: flex-end; } }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
   .item3, .item9, .item15 {
     -webkit-transform: translate(calc(10px * 2.5 + 2px * 3), 0);
             transform: translate(calc(10px * 2.5 + 2px * 3), 0); } }
@@ -252,7 +253,7 @@ form {
     display: flex;
     -webkit-box-pack: start;
             justify-content: flex-start; } }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1000px) {
   .push-right,
   .vertical-normal.push-left {
     -webkit-transform: none;
@@ -410,7 +411,7 @@ form {
 @media only screen and (max-width: 800px) {
   .vertical-normal .box {
     grid-template-rows: 56px auto; } }
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
   .vertical-normal .box {
     grid-template-rows: 120px auto; }
     .vertical-normal .box .entry-text {
@@ -422,7 +423,7 @@ form {
       .vertical-normal .box .box-header .number {
         float: none; } }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1000px) {
   .normal-vertical .box {
     grid-template-rows: 120px auto; }
     .normal-vertical .box .entry-text {
@@ -452,59 +453,55 @@ form {
 
 /**********************************************IndexPage styling************************************/
 .carousel-wrapper {
-  position: relative; }
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content; }
 
 .carousel-body {
   height: calc(100vh - 150px); }
 
 .slide {
   position: fixed;
+  right: 0;
   transition: all 1s ease-in-out;
-  width: 710px;
-  height: 450px; }
-  @media only screen and (min-width: 800px) and (max-width: 1200px) {
+  height: inherit;
+  min-height: 400px;
+  max-height: 450px;
+  background-color: white; }
+  @media only screen and (min-width: 1000px) {
     .slide {
-      width: 500px; } }
-
-.slide-right {
-  right: -100vw; }
-  .slide-right.next {
-    right: calc(-100vw + 710px); }
-    @media only screen and (min-width: 800px) and (max-width: 1200px) {
-      .slide-right.next {
-        right: calc(-100vw + 500px); } }
-
-.slide-left {
-  right: calc(150vw  - 710px/4); }
-  @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .slide-left {
-      right: calc(150vw - 500px/4); } }
-  .slide-left.previous {
-    right: calc(100vw - (50vw/2 - 710px/4)); }
-    @media only screen and (min-width: 800px) and (max-width: 1200px) {
-      .slide-left.previous {
-        right: calc(100vw - (50vw/2 - 500px/4)); } }
-
-.slide.active {
-  right: calc((50vw - 710px/2)); }
-  @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .slide.active {
-      right: calc((50vw - 500px/2)); } }
-
-.slide:first-child {
-  background: #0ACCAB; }
-
-.slide:last-child {
-  background: #00A3A3; }
-
-.slide:nth-child(2) {
-  background: #00AAEB; }
-
-.slide:nth-child(3) {
-  background: #AB90BB; }
-
-.slide:nth-child(4) {
-  background: #C8007D; }
+      width: 710px; }
+      .slide.slide-right.next {
+        right: calc(-710px + 100px); }
+      .slide.slide-left.previous {
+        right: calc(100vw - 100px); }
+      .slide.active {
+        right: calc((50vw - 710px / 2)); } }
+  @media only screen and (min-width: 800px) and (max-width: 1000px) {
+    .slide {
+      width: 710px; }
+      .slide.slide-right.next {
+        right: calc(-710px + 50px); }
+      .slide.slide-left.previous {
+        right: calc(100vw - 50px); }
+      .slide.active {
+        right: calc((50vw - 710px / 2)); } }
+  @media only screen and (max-width: 800px) {
+    .slide {
+      width: 100%; }
+      .slide.slide-right.next {
+        right: calc(-inherit + 0px); }
+      .slide.slide-left.previous {
+        right: calc(100vw - 0px); }
+      .slide.active {
+        right: calc((50vw - inherit / 2)); } }
+  .slide.slide-right {
+    background-color: #4d4d4d;
+    right: -150vw; }
+  .slide.slide-left {
+    background-color: #4d4d4d;
+    right: 150vw; }
 
 .carousel-progress {
   overflow: hidden;
@@ -512,6 +509,16 @@ form {
   display: flex;
   -webkit-box-pack: center;
           justify-content: center; }
+  @media only screen and (max-width: 800px) {
+    .carousel-progress {
+      position: fixed;
+      bottom: 25px;
+      width: 100%; }
+      .carousel-progress .progress-wrapper {
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        margin: 0 auto; } }
   .carousel-progress ul {
     overflow: hidden;
     display: inline-block;
@@ -544,17 +551,34 @@ form {
   position: absolute;
   top: 0;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
+  max-height: 450px;
   display: grid;
   grid-template-areas: 'left right';
+  grid-template-columns: 50px 50px;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: justify;
           justify-content: space-between; }
+  @media only screen and (min-width: 1000px) {
+    .carousel-controls {
+      grid-template-columns: 100px 100px; } }
+  @media only screen and (max-width: 800px) {
+    .carousel-controls {
+      display: none; } }
+  .carousel-controls .slide-control span {
+    color: #C8007D; }
   .carousel-controls .control-next {
     grid-area: right; }
   .carousel-controls .control-prev {
     grid-area: left; }
+  .carousel-controls .slide-control {
+    height: inherit;
+    background-color: #ffc9e2;
+    opacity: 0.5;
+    border-radius: 0;
+    margin: 0;
+    width: 100%; }
 
 .slide-control {
   height: 40px;
@@ -568,6 +592,7 @@ form {
   outline: none; }
 
 .slide-control span {
+  color: #ffc9e2;
   cursor: pointer;
   display: inline-block;
   -webkit-transform: scale(1.5, 1.5);
@@ -582,12 +607,14 @@ form {
   margin-right: 10px;
   content: '\00bb'; }
 
-.control-prev span:hover {
+.control-prev:hover span {
   -webkit-transform: scale(2.3, 2.3) translateX(-5px);
-          transform: scale(2.3, 2.3) translateX(-5px); }
+          transform: scale(2.3, 2.3) translateX(-5px);
+  transition: all 0.3s ease-in-out; }
 
-.control-next span:hover {
+.control-next:hover span {
   -webkit-transform: scale(2.3, 2.3) translateX(5px);
-          transform: scale(2.3, 2.3) translateX(5px); }
+          transform: scale(2.3, 2.3) translateX(5px);
+  transition: all 0.3s ease-in-out; }
 
 /*# sourceMappingURL=styles.css.map */

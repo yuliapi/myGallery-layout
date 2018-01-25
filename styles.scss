@@ -1,6 +1,6 @@
 /*Screen size utils*/
 $break-small: 800px;
-$break-large: 1200px;
+$break-large: 1000px;
 
 /*Size base*/
 $base-margin: 10px; /***don't change this. Should be 10px! ***/
@@ -187,7 +187,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-  background-image: url("/images/stardust.jpg");
+  background-color: #444349;
+  background-image: url("/images/stardust.png");
 }
 
 header {
@@ -583,94 +584,78 @@ form {
 /**********************************************IndexPage styling************************************/
 .carousel-wrapper {
   position: relative;
+  height: max-content;
 }
 
 .carousel-body {
   height: calc(100vh - 150px);
 }
 
-$slide-width: 710px;
+@mixin slide-position($width, $side-width) {
+  &.slide-right.next {
+    right: calc(-#{$width} + #{$side-width});
+    //right: calc(-710px + 100px);
+  }
+  &.slide-left.previous {
+    right: calc(100vw - #{$side-width});
+    //right: calc(100vw - 100px);
+  }
+  &.active {
+    right: calc((50vw - #{$width} / 2));
+    //right: calc((50vw - 710px/2));
+  }
+}
 
 .slide {
   position: fixed;
+  right: 0;
   transition: all 1s ease-in-out;
-  width: $slide-width;
-  height: 450px;
+  height: inherit;
+  min-height: 400px;
+  max-height: 450px;
+  background-color: white;
+  @include adjust-content(large-screen) {
+    $slide-width: 710px;
+    $side-slide-width: 100px;
+    width: $slide-width;
+    @include slide-position($slide-width, $side-slide-width);
+  }
   @include adjust-content(medium-screen) {
-    width: 500px;
+    $slide-width: 710px;
+    $side-slide-width: 50px;
+    width: $slide-width;
+    @include slide-position($slide-width, $side-slide-width);
   }
-}
-
-.slide-right {
-  right: -100vw;
-  &.next {
-    right:(calc(-100vw + #{$slide-width}));
-    @include adjust-content(medium-screen) {
-      right:(calc(-100vw + 500px))
-    }
+  @include adjust-content(small-screen) {
+    $slide-width: inherit;
+    $side-slide-width: 0px;
+    width: 100%;
+    @include slide-position($slide-width, $side-slide-width);
   }
-}
-
-.slide-left {
-  right: calc(150vw  - #{$slide-width}/4);
-  @include adjust-content(medium-screen) {
-    right:(calc(150vw - 500px/4))
+  &.slide-right {
+    background-color: #4d4d4d;
+    right: -150vw;
   }
-  &.previous {
-    right: calc(100vw - (50vw/2 - #{$slide-width}/4));
-    @include adjust-content(medium-screen) {
-      right: calc(100vw - (50vw/2 - 500px/4));
-    }
+  &.slide-left {
+    background-color: #4d4d4d;
+    right: 150vw;
   }
-}
-
-.slide.active {
-  right: calc((50vw - #{$slide-width}/2));
-  @include adjust-content(medium-screen) {
-    right: calc((50vw - 500px/2));
-  }
-}
-
-//
-//.slide.previous {
-//  right: 100vw;
-//
-//
-//  transition: all 1s ease-in-out;
-//}
-
-//.slide.next {
-//  position: initial;
-//  grid-area: right;
-//
-//  width: initial;
-//  transition: all 1s ease-in-out;
-//}
-
-.slide:first-child {
-  background: #0ACCAB;
-}
-
-.slide:last-child {
-  background: #00A3A3;
-}
-
-.slide:nth-child(2) {
-  background: #00AAEB;
-}
-
-.slide:nth-child(3) {
-  background: #AB90BB;
-}
-
-.slide:nth-child(4) {
-  background: #C8007D;
 }
 
 .carousel-progress {
   overflow: hidden;
   display: flex;
   justify-content: center;
+  @include adjust-content(small-screen) {
+    position: fixed;
+    bottom: 25px;
+    width: 100%;
+    .progress-wrapper {
+      width: max-content;
+      margin: 0 auto;
+    }
+  }
+
   ul {
     overflow: hidden;
     display: inline-block;
@@ -712,17 +697,37 @@ $slide-width: 710px;
   position: absolute;
   top: 0;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
+  //min-height: 400px;
+  max-height: 450px;
+  //height: calc(100% - 50px);
   display: grid;
   grid-template-areas: 'left right';
+  grid-template-columns: 50px 50px;
+  @include adjust-content(large-screen) {
+    grid-template-columns: 100px 100px;
+  }
+  @include adjust-content(small-screen) {
+    display: none;
+  }
   align-items: center;
   justify-content: space-between;
-
+  .slide-control span {
+  color: $deep-rose;
+  }
   .control-next {
     grid-area: right;
   }
   .control-prev {
     grid-area: left;
+  }
+  .slide-control {
+    height: inherit;
+    background-color: $cake-pink;
+    opacity: 0.5;
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
   }
 }
 
@@ -739,6 +744,7 @@ $slide-width: 710px;
 }
 
 .slide-control span {
+  color: $cake-pink;
   cursor: pointer;
   display: inline-block;
   transform: scale(1.5, 1.5);
@@ -755,13 +761,15 @@ $slide-width: 710px;
   content: '\00bb';
 }
 
-.control-prev span:hover {
+.control-prev:hover span {
   transform: scale(2.3, 2.3) translateX(-5px);
+  transition: all 0.3s ease-in-out;
 }
 
-.control-next span:hover {
+.control-next:hover span {
 
   transform: scale(2.3, 2.3) translateX(5px);
+  transition: all 0.3s ease-in-out;
 }
 
 
