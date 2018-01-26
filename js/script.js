@@ -315,14 +315,35 @@ function displayAllEntries() {
 }
 
 /************************************CAROUCEL****************************************************/
+class Slide {
+    constructor(slide) {
+        this.slide = slide;
+    }
+
+    checkAndRemoveClass(name) {
+        if (this.slide.classList.contains(name)) {
+            this.slide.classList.remove(name)
+        }
+    }
+
+    addNewClass(name) {
+        if (this.slide && this.slide.classList.contains(name) === false) {
+            this.slide.classList.add(name)
+        }
+    }
+}
+
 class Carousel {
     constructor(e) {
         this.element = document.getElementById(e);
         this.slides = this.element.getElementsByClassName('carousel-slide');
+        this.modifiedSlides = [];
+        for (let s of this.slides) {
+            this.modifiedSlides.push(new Slide(s))
+        }
+
         this.bullets = this.element.getElementsByClassName('progress-bullet');
         this.links = this.allLinks();
-        this.last = this.slides.length - 1;
-        this.classList = 'carousel-slide slide';
         this.currentActiveNumber = 0;
     }
 
@@ -334,7 +355,6 @@ class Carousel {
         return arr
     }
 
-
     activate() {
         let allNext = this.element.getElementsByClassName('control-next');
         let allPrev = this.element.getElementsByClassName('control-prev');
@@ -345,108 +365,72 @@ class Carousel {
             prev.addEventListener('click', this.prevSlide.bind(this));
         }
         for (let link of this.links) {
-            let target = link.dataset.slide - 1;
+            let target = link.dataset.slide;
             link.addEventListener('click', this.showSlide.bind(this, target))
+        }
+    }
+
+    nextSlide() {
+
+        if (this.currentActiveNumber !== this.modifiedSlides.length - 1) {
+            this.switchActive(this.currentActiveNumber + 1);
+            this.currentActiveNumber++;
+        }
+    }
+
+    prevSlide() {
+        if (this.currentActiveNumber !== 0) {
+            this.switchActive(this.currentActiveNumber - 1);
+            this.currentActiveNumber--;
         }
     }
 
     showSlide(n) {
         console.log('link clicked');
-        this.switchActive(this.currentActiveNumber, n);
-        this.currentActiveNumber = n
+        console.log("active:" + this.currentActiveNumber + " ,switch to: " + n);
+        n = parseInt(n);
+        this.switchActive(n);
+        this.currentActiveNumber = n;
     }
 
-    nextSlide() {
 
-        if (this.currentActiveNumber !== this.last) {
-            this.goLeft();
-            this.switchActive(this.currentActiveNumber, this.currentActiveNumber + 1);
-            this.currentActiveNumber++;
-            this.helperClasses('goForward')
+    switchActive(targetNumber) {
+        this.modifiedSlides[targetNumber].checkAndRemoveClass('slide-right');
+        this.modifiedSlides[targetNumber].checkAndRemoveClass('slide-left');
+        this.modifiedSlides[targetNumber].checkAndRemoveClass('next');
+        this.modifiedSlides[targetNumber].checkAndRemoveClass('previous');
+
+        this.modifiedSlides[targetNumber].addNewClass('active');
+
+        for (let s = 0; s < targetNumber; s++) {
+            this.modifiedSlides[s].addNewClass('slide-left');
+            this.modifiedSlides[s].checkAndRemoveClass('slide-right');
+            this.modifiedSlides[s].checkAndRemoveClass('active');
+            this.modifiedSlides[s].checkAndRemoveClass('previous');
+            this.modifiedSlides[s].checkAndRemoveClass('next');
         }
-    }
-
-    goLeft() {
-        if (this.slides[this.currentActiveNumber + 1].classList.contains('next')) {
-            this.slides[this.currentActiveNumber + 1].classList.remove('next')
+        for (let k = targetNumber + 1; k < this.modifiedSlides.length; k++) {
+            this.modifiedSlides[k].addNewClass('slide-right');
+            this.modifiedSlides[k].checkAndRemoveClass('slide-left');
+            this.modifiedSlides[k].checkAndRemoveClass('active');
+            this.modifiedSlides[k].checkAndRemoveClass('previous');
+            this.modifiedSlides[k].checkAndRemoveClass('next');
         }
-        if (this.currentActiveNumber !== 0 && this.slides[this.currentActiveNumber - 1].classList.contains('previous')) {
-            this.slides[this.currentActiveNumber - 1].classList.remove('previous')
+        if (this.modifiedSlides[targetNumber - 1]) {
+            this.modifiedSlides[targetNumber - 1].addNewClass('previous');
         }
-        this.slides[this.currentActiveNumber].classList.add('previous', 'slide-left');
-        if (this.slides[this.currentActiveNumber + 2]) {
-            this.slides[this.currentActiveNumber + 2].classList.add('next');
+
+        if (this.modifiedSlides[targetNumber + 1]) {
+            this.modifiedSlides[targetNumber + 1].addNewClass('next');
         }
-    }
 
-    prevSlide() {
-
-
-        if (this.currentActiveNumber !== 0) {
-            this.goRight(this.currentActiveNumber);
-            this.switchActive(this.currentActiveNumber, this.currentActiveNumber - 1);
-
-            this.currentActiveNumber--;
-            this.helperClasses('goBack');
-
-        }
-    }
-
-    helperClasses(direction) {
-        if (direction === 'goForward') {
-
-            if (this.slides[this.currentActiveNumber - 1]) {
-                this.slides[this.currentActiveNumber - 1].classList.add('slide-left')
-            }
-            if (this.slides[this.currentActiveNumber - 2] && this.slides[this.currentActiveNumber - 1].classList.contains('slide-right')) {
-                this.slides[this.currentActiveNumber - 2].classList.remove('slide-right')
+        for (let b of this.bullets) {
+            if (b.classList.contains('active')) {
+                b.classList.remove('active');
             }
         }
-        if (direction === 'goBack') {
-            if (this.slides[this.currentActiveNumber + 1]) {
-                this.slides[this.currentActiveNumber + 1].classList.add('slide-right')
-            }
-            if (this.slides[this.currentActiveNumber + 2] && this.slides[this.currentActiveNumber + 1].classList.contains('slide-left')) {
-                this.slides[this.currentActiveNumber + 2].classList.remove('slide-left')
-            }
-        }
-    }
-
-    goRight() {
-        console.log("step back" + this.currentActiveNumber);
-
-        if (this.slides[this.currentActiveNumber - 1].classList.contains('previous')) {
-            this.slides[this.currentActiveNumber - 1].classList.remove('previous')
-        }
-        if (this.currentActiveNumber !== 1) {
-            this.slides[this.currentActiveNumber - 2].classList.add('previous');
-        }
-        if (this.slides[this.currentActiveNumber + 1]) {
-            this.slides[this.currentActiveNumber + 1].classList.remove('next');
-        }
-        if (this.currentActiveNumber !== 0) {
-            this.slides[this.currentActiveNumber].classList.add('next');
-        }
-
-
-    }
-
-    switchActive(currentNumber, targetNumber) {
-        if (this.slides[targetNumber].classList.contains('slide-right')) {
-            this.slides[targetNumber].classList.remove('slide-right')
-        }
-        if (this.slides[targetNumber].classList.contains('slide-left')) {
-            this.slides[targetNumber].classList.remove('slide-left')
-        }
-        this.slides[currentNumber].classList.remove('active');
-        if (currentNumber === this.slides.length) {
-            this.slides[currentNumber].classList.add('slide-right');
-        }
-        this.slides[targetNumber].classList.add('active');
-        this.bullets[currentNumber].classList.remove('active');
         this.bullets[targetNumber].classList.add('active');
     }
-
 }
 
 
