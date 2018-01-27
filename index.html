@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Oxygen" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href='css/styles.css'>
     <link rel="icon" href="images/logo.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -12,8 +13,8 @@
 <header class="">
     <nav>
         <ul>
-            <li><a href = "index.html" class="active" >Home</a></li>
-            <li><a href = gallery.html>Gallery</a></li>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href=gallery.html>Gallery</a></li>
         </ul>
     </nav>
     <form onsubmit="return validate()">
@@ -31,54 +32,161 @@
                 <div class="carousel-body">
 
                     <div class="carousel-slide slide active">
-                        <p>First slide</p>
+                        <div class="slide-content first">
+                            <h1>What and why?</h1>
+                            <p>Blog template to display records with graphical and textual information in elegant and
+                                non-dull manner. </p>
+                            <p> This project demonstrates bunch of approaches used to provide good user experience. Also
+                                contains a
+                                back-end part to get posts over the REST interface.</p>
+
+                        </div>
                     </div>
                     <div class="carousel-slide slide slide-right next">
-                        <p>Second slide</p>
+                        <div class="slide-content second">
+                            <img src="images/layout-mockup.svg" height="400px" width="390px" style="margin-right:20px;">
+                            <div style="position: absolute; top: 0; left: 410px;">
+                                <h1>Gallery layout</h1>
+                                <p class="small">Layout should look like Masonry, BUT... instead of placing elements in
+                                    optimal
+                                    position based on available vertical space we fit items to strict positioned
+                                    containers</p>
+                                <p class="small">Than we move containers to make appearance not such ordered, for
+                                    example: item 6
+                                    moved to left and block of two horizontal boxes - to center</p>
+                                <p class="small">Gallery looks nice on any screen size when have to display number of
+                                    records multiple
+                                    of 15.</p>
+                                <p class="small">Check next slide to learn WHAT IF...</p>
+                            </div>
+
+
+                        </div>
+
                     </div>
                     <div class="carousel-slide slide slide-right">
-                        <p>Third slide</p>
+                        <div class="slide-content third">
+
+                            <div style="width: 350px; float: left; padding-top: 70px;">
+                                <p class="small"><i style="margin-right: 20px;">Q:</i>If we have number of records that
+                                    break the harmony?
+                                </p>
+                                <p class="small"><i style="margin-right: 20px;">A:</i>It's simple, just put them
+                                    <del>away</del>
+                                    <ins>in extra row</ins>
+                                    with different display rules.
+                                </p>
+                                <p>Decision about extra row is based on number of items to display and viewport
+                                    width.</p>
+                            </div>
+                            <img src="images/extra-row.svg" height="400px" style="float: right">
+
+                        </div>
                     </div>
                     <div class="carousel-slide slide slide-right">
-                        <p>Fourth slide</p>
+                        <div class="slide-content fourth">
+                            <h1>Card's content</h1>
+                            <img src="images/card-mockup.svg" style="margin-top: 10px">
+
+                            <div style="position: absolute; bottom: 0 ; left: 330px; margin-bottom: 0">
+                                <ol style="margin-bottom: 40px">
+                                    <li class="small">
+                                        Determine in what block we are going to display entry.
+                                    </li>
+                                    <li class="small">
+                                        Change card-content layout.
+                                    </li>
+                                    <li class="small">
+                                        Adjust photo height/width for vertical block.
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
-                    <div class="carousel-slide slide slide-right">
-                        <p>Fifth slide</p>
+                        <div class="carousel-slide slide slide-right">
+                            <div class="slide-content fifth">
+                                <h1>Presentation layer solutions</h1>
+                                <ul>
+                                    <li><span>&#10004</span><i>Javascript</i> to set and change classes to control
+                                        visual appearance
+                                    </li>
+                                    <li><span>&#10004</span><i>CSS Grid</i> and <i>media-queries</i> to design
+                                        responsive
+                                        layout
+                                    </li>
+                                    <li><span>&#10004</span><i>CSS transform</i> property to reorder items
+                                    </li>
+                                    <li><span>&#10004</span><i>SASS variables and mixins</i> to define transform:
+                                        translate
+                                        value based on block dimensions and margins
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="carousel-slide slide slide-right">
+                            <div class="slide-content sixth">
+
+                                <img src="images/backend-scheme.svg" height="400px">
+                                <div style="position: absolute; bottom: 0; left: 550px; top: 0; margin-bottom: 0">
+                                    <h1 style="margin-top: 110px;">What is on back-end</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide slide slide-right">
+                            <div class="slide-content seventh">
+                                <h1>Back-end tools </h1>
+                                <ul>
+                                    <li><span>&#10004</span><i>Koa.js</i> for RESTful API</li>
+                                    <li><span>&#10004</span><i>Knex.js</i> for DB management and interaction</li>
+                                    <li><span>&#10004</span><i>Chai</i> for TDD
+                                    </li>
+                                    <li><span>&#10004</span><i>grunt-connect-proxy</i> to avoid CORS issues
+                                    </li>
+                                    <li><span>&#10004</span><i>PostgreSQL</i> as database
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="carousel-controls">
+                        <button class="slide-control control-prev" id="btnPrevious" data-controls="myCarousel"
+                                data-target="previous"><span></span>
+                        </button>
+                        <button class="slide-control control-next" id="btnNext" data-controls="myCarousel"
+                                data-target="next"><span></span>
+                        </button>
+                    </div>
+
                 </div>
+                <div class="carousel-progress">
+                    <div class="progress-wrapper">
+                        <button class="slide-control control-prev" data-controls="myCarousel"
+                                data-target="previous"><span></span>
+                        </button>
+                        <ul>
 
-                <div class="carousel-controls">
-                    <button class="slide-control control-prev" id="btnPrevious" data-controls="myCarousel"
-                            data-target="previous"><span></span>
-                    </button>
-                    <button class="slide-control control-next" id="btnNext" data-controls="myCarousel"
-                            data-target="next"><span></span>
-                    </button>
+                            <li class="progress-bullet active"><a href="#" data-slide="0"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="1"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="2"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="3"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="4"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="5"></a></li>
+                            <li class="progress-bullet"><a href="#" data-slide="6"></a></li>
+
+
+                        </ul>
+                        <button class="slide-control control-next" data-controls="myCarousel"
+                                data-target="next"><span></span>
+                        </button>
+                    </div>
+
                 </div>
-
-            </div>
-            <div class="carousel-progress">
-                <div class="progress-wrapper">
-                    <button class="slide-control control-prev" data-controls="myCarousel"
-                            data-target="previous"><span></span>
-                    </button>
-                    <ul>
-
-                        <li class="progress-bullet active"><a href = "#" data-slide = "0"></a></li>
-                        <li class="progress-bullet"><a href = "#" data-slide = "1"></a></li>
-                        <li class="progress-bullet"><a href = "#" data-slide = "2"></a></li>
-                        <li class="progress-bullet"><a href = "#" data-slide = "3"></a></li>
-                        <li class="progress-bullet"><a href = "#" data-slide = "4"></a></li>
-
-                    </ul>
-                    <button class="slide-control control-next" data-controls="myCarousel"
-                            data-target="next"><span></span>
-                    </button>
-                </div>
-
             </div>
         </div>
-    </div>
 
 
 </section>

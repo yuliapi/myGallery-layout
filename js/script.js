@@ -210,7 +210,7 @@ class DisplayEntry {
         }
         if (DisplayUtils.isViewportLarge()) {
             totalModulus = (this.totalEntriesCount % itemsInPeriod) % largeScreenRowCount;
-            if (totalModulus < largeScreenRowCount - 1) { /*on large screen with max 5 items in a row  only 4 filled is ok and don't require last row*/
+            if (totalModulus < largeScreenRowCount) {
                 needExtraRow = true;
             }
         }

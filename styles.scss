@@ -612,7 +612,13 @@ form {
   height: inherit;
   min-height: 400px;
   max-height: 450px;
-  background-color: white;
+  box-sizing: border-box;
+  padding: $padding-base*2;
+  padding-left: $padding-base*6;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(19, 19, 19, 0.45);
+  box-shadow: 0 10px 20px 5px rgba(159, 159, 159, 0.82), 0 0 2px rgba(232, 232, 232, 0.99);
+
   @include adjust-content(large-screen) {
     $slide-width: 710px;
     $side-slide-width: 100px;
@@ -710,7 +716,7 @@ form {
   align-items: center;
   justify-content: space-between;
   .slide-control span {
-  color: $deep-rose;
+    color: $deep-rose;
   }
   .control-next {
     grid-area: right;
@@ -769,5 +775,67 @@ form {
   transition: all 0.3s ease-in-out;
 }
 
+.slide-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 20px;
+  .small {
+    font-size: 16px;
+  }
+  h1 {
+    font-family: 'Oxygen', sans-serif;
+    // font-family: Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  ul {
+    list-style-type: none;
+    //position: relative;
+    //left: 60px;
+    li {
+      line-height: 36px;
+    }
+  }
+  ol li {
+    padding-bottom: 10px;
+  }
+  &.seventh ul,
+  &.fifth ul {
+    padding-left: 60px;
+    li span {
+      color: $green-grass;
+      position: relative;
+      left: -$base-margin*2;
+      font-size: 32px;
+      &:before {
+        content: '\274F	';
+        color: initial;
+        position: relative;
+        left: 20px;
+        font-size: 20px;
+      }
+    }
+  }
+  &.second {
+    p {
+      font-size: 16px;
+      span {
+        margin-left: $base-margin;
+        font-size: 30px;
+      }
+    }
+    ul {
+      font-size: 16px;
+      span {
+        color: $lemon-yellow;
+        font-size: 20px;
+        margin-right: $base-margin;
+      }
+    }
+  }
 
+}
 

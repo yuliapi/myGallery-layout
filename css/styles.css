@@ -468,7 +468,12 @@ form {
   height: inherit;
   min-height: 400px;
   max-height: 450px;
-  background-color: white; }
+  box-sizing: border-box;
+  padding: 10px;
+  padding-left: 30px;
+  background-color: white;
+  border: 1px solid rgba(19, 19, 19, 0.45);
+  box-shadow: 0 10px 20px 5px rgba(159, 159, 159, 0.82), 0 0 2px rgba(232, 232, 232, 0.99); }
   @media only screen and (min-width: 1000px) {
     .slide {
       width: 710px; }
@@ -616,5 +621,49 @@ form {
   -webkit-transform: scale(2.3, 2.3) translateX(5px);
           transform: scale(2.3, 2.3) translateX(5px);
   transition: all 0.3s ease-in-out; }
+
+.slide-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 20px; }
+  .slide-content .small {
+    font-size: 16px; }
+  .slide-content h1 {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-align: center; }
+  .slide-content ul {
+    list-style-type: none; }
+    .slide-content ul li {
+      line-height: 36px; }
+  .slide-content ol li {
+    padding-bottom: 10px; }
+  .slide-content.seventh ul, .slide-content.fifth ul {
+    padding-left: 60px; }
+    .slide-content.seventh ul li span, .slide-content.fifth ul li span {
+      color: #3ACC00;
+      position: relative;
+      left: -20px;
+      font-size: 32px; }
+      .slide-content.seventh ul li span:before, .slide-content.fifth ul li span:before {
+        content: '\274F	';
+        color: initial;
+        position: relative;
+        left: 20px;
+        font-size: 20px; }
+  .slide-content.second p {
+    font-size: 16px; }
+    .slide-content.second p span {
+      margin-left: 10px;
+      font-size: 30px; }
+  .slide-content.second ul {
+    font-size: 16px; }
+    .slide-content.second ul span {
+      color: #F7E011;
+      font-size: 20px;
+      margin-right: 10px; }
 
 /*# sourceMappingURL=styles.css.map */
