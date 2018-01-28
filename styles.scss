@@ -6,10 +6,13 @@ $break-large: 1200px;
 $base-margin: 10px; /***don't change this. Should be 10px! ***/
 $padding-base: 5px;
 $border-width: 2px;
+$portrait-width: 153px;
+$landscape-width: 315px;
 $horizontal-box-width: 350px;
 $horizontal-box-height: 300px;
 $box-vert-width: 250px;
 $box-vert-height: ($horizontal-box-height + $base-margin) * 2;
+$last-row-box-width: calc(#{$horizontal-box-width} + #{$box-vert-width} / 2 + #{$base-margin});
 $smbox-header-fixed-height: 56px;
 $box-header-fixed-height: 120px;
 $box-content-fixed-height: 240px;
@@ -189,11 +192,16 @@ h1, h2, h3, h4, h5, h6 {
 body {
   background-color: #444349;
   background-image: url("../images/stardust.png");
+  display: grid;
+  grid-template-areas: 'top' 'content';
+  grid-template-rows: auto 1fr;
+  height: 100vh;
 }
 
 header {
   //height: 70px;
   margin-bottom: $base-margin;
+  grid-area: top;
   display: grid;
   grid-template-areas: "left right";
   color: $cake-pink;
@@ -232,6 +240,7 @@ header {
     }
   }
 }
+
 .nav-link {
   cursor: pointer;
   background: #4d4d4d;
@@ -256,9 +265,6 @@ header {
   }
 
 }
-
-
-
 
 form {
 
@@ -293,7 +299,11 @@ form {
     }
   }
 }
-
+.content-wrapper {
+  grid-area: content;
+  height: max-content;
+  margin: auto 0;
+}
 /*****************************************Gallery layout****************************/
 .gallery {
   width: fit-content;
@@ -301,9 +311,9 @@ form {
   display: grid;
   @include adjust-content(medium-screen) {
     grid-template-areas: "left right";
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
     grid-auto-flow: column;
-    min-width: 100%;
+    //min-width: max-content;
   }
   @include adjust-content(large-screen) {
     grid-template-areas: "left middle right";
@@ -333,7 +343,7 @@ form {
   position: relative;
 
   @include adjust-content(medium-screen) {
-    right: calc(#{$base-margin}*3 + 4px);
+    left: calc(#{$base-margin} + #{$border-width}*2.5);
     .box {
       width: 100%;
       margin: $base-margin 0;
@@ -347,11 +357,29 @@ form {
       display: flex;
       grid-area: auto;
       .box {
-        width: 100%;
+        width: $last-row-box-width;
       }
     }
     .gallery-item:nth-child(odd) {
       justify-content: flex-end;
+    }
+    .illustrated {
+      .entry-photo.portrait {
+        width: $portrait-width;
+
+        div {
+          width: inherit;
+        }
+      }
+      .entry-photo.landscape {
+        margin: 0 auto;
+        width: max-content;
+      }
+      .entry-text.portrait {
+        padding: $padding-base;
+        padding-left: $padding-base*3;
+        width: calc(#{$last-row-box-width} - #{$portrait-width} - 40px);
+      }
     }
 
   }
@@ -452,30 +480,10 @@ form {
     grid-row: auto / span 2;
     @include lg-vert-push-right();
   }
-  //
-  //.item1 .box,
-  //.item4 .box,
-  //.item7 .box,
-  //.item8 .box,
-  //.item11 .box,
-  //.item12 .box {
-  //  margin-bottom: 0;
-  //}
 
   .gallery-item.item12 .box {
     margin-top: $base-margin;
   }
-  //
-  //.item2 .box,
-  //.item5 .box,
-  //.item7 .box,
-  //.item9 .box,
-  //.item10 .box,
-  //.item13 .box,
-  //.item14 .box {
-  //  margin-top: 0;
-  //}
-
   .item1, .item2, .item7, .item9, .item11, .item13 {
     display: flex;
     justify-content: flex-end;
@@ -524,6 +532,8 @@ form {
 
 .entry-photo.landscape {
   padding-right: 0;
+  margin: 0 auto;
+  width: max-content
 
 }
 
@@ -735,11 +745,11 @@ form {
   //position: absolute;
   position: fixed;
   //top: 0;
-  top: 72px;
+  top: 85px;
   width: 100%;
-  height: 100%;
-  //max-height: 450px;
-  max-height: 418px;
+  height: calc(100vh - 165px);
+  min-height: 400px;
+  max-height: 450px;
   display: grid;
   grid-template-areas: 'left center right';
   grid-template-columns: 50px 1fr 50px;

@@ -5,7 +5,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112752309-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-112752309-1');
@@ -28,14 +32,14 @@
         </ul>
     </nav>
     <!--<form onsubmit="return validate()">-->
-        <!--Select between 1 and 100-->
-        <!--<input id="number" required type="number" name="quantity" min="1" max="100">-->
-        <!--<button type="submit">Submit</button>-->
+    <!--Select between 1 and 100-->
+    <!--<input id="number" required type="number" name="quantity" min="1" max="100">-->
+    <!--<button type="submit">Submit</button>-->
     <!--</form>-->
 
 </header>
 
-<section>
+<section class="content-wrapper">
     <div class="content">
         <div id="myCarousel" class="carousel">
             <div class="carousel-wrapper">
@@ -46,11 +50,13 @@
                             <h1>What and why?</h1>
                             <p>Blog template to display records with graphical and textual information in elegant and
                                 non-dull manner. </p>
-                            <p>This project demonstrates a bunch of JS and CSS approaches to provide a good user experience.</p>
-                            <p>Gallery and slides use plain Javascript, with no frameworks and libraries (except jQuery for AJAX calls)</p>
+                            <p>This project demonstrates a bunch of JS and CSS approaches to provide a good user
+                                experience.</p>
+                            <p>Gallery and slides use plain Javascript, with no frameworks and libraries (except jQuery
+                                for AJAX calls)</p>
                             <p>Backend API on top of PostgreSQL DB added for demonstration purposes</p>
                             <div style="text-align: center">
-                                <a href = gallery.html class="nav-link" >Gallery demo</a>
+                                <a href=gallery.html class="nav-link">Gallery demo</a>
                             </div>
 
 
@@ -63,7 +69,8 @@
                                 <h1>Gallery layout</h1>
                                 <p class="small">Layout should look like Masonry, BUT... instead of placing elements in
                                     optimal
-                                    position based on available vertical space we display items in chronological order  and fit them to strict positioned boxes</p>
+                                    position based on available vertical space we display items in chronological order
+                                    and fit them to strict positioned boxes</p>
                                 <p class="small">Than we move containers to make appearance not such ordered, for
                                     example: item 6
                                     moved to left and block of two horizontal boxes - to center</p>
@@ -116,67 +123,65 @@
                             </div>
                         </div>
                     </div>
-                        <div class="carousel-slide slide slide-right">
-                            <div class="slide-content fifth">
-                                <h1>Presentation layer solutions</h1>
-                                <ul>
-                                    <li><span>&#10004</span><i>Javascript</i> to set and change classes to control
-                                        visual appearance
-                                    </li>
-                                    <li><span>&#10004</span><i>CSS Grid</i> and <i>media-queries</i> to design
-                                        responsive
-                                        layout
-                                    </li>
-                                    <li><span>&#10004</span><i>CSS transform</i> property to reorder items
-                                    </li>
-                                    <li><span>&#10004</span><i>SASS variables and mixins</i> to define transform:
-                                        translate
-                                        value based on block dimensions and margins
-                                    </li>
+                    <div class="carousel-slide slide slide-right">
+                        <div class="slide-content fifth">
+                            <h1>Presentation layer solutions</h1>
+                            <ul>
+                                <li><span>&#10004</span><i>Javascript</i> to set and change classes to control
+                                    visual appearance
+                                </li>
+                                <li><span>&#10004</span><i>CSS Grid</i> and <i>media-queries</i> to design
+                                    responsive
+                                    layout
+                                </li>
+                                <li><span>&#10004</span><i>CSS transform</i> property to reorder items
+                                </li>
+                                <li><span>&#10004</span><i>SASS variables and mixins</i> to define transform:
+                                    translate
+                                    value based on block dimensions and margins
+                                </li>
 
-                                </ul>
-                            </div>
-
+                            </ul>
                         </div>
-                        <div class="carousel-slide slide slide-right">
-                            <div class="slide-content sixth">
 
-                                <img src="images/backend-scheme.svg" height="400px">
-                                <div style="position: absolute; bottom: 0; left: 550px; top: 0; margin-bottom: 0">
-                                    <h1 style="margin-top: 110px;">What is on back-end</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-slide slide slide-right">
-                            <div class="slide-content seventh">
-                                <h1>Back-end tools </h1>
-                                <ul>
-                                    <li><span>&#10004</span><i>Koa.js</i> for RESTful API</li>
-                                    <li><span>&#10004</span><i>Knex.js</i> for DB management and interaction</li>
-                                    <li><span>&#10004</span><i>Chai</i> for TDD
-                                    </li>
-                                    <li><span>&#10004</span><i>grunt-connect-proxy</i> to avoid CORS issues
-                                    </li>
-                                    <li><span>&#10004</span><i>PostgreSQL</i> as database
-                                    </li>
+                    </div>
+                    <div class="carousel-slide slide slide-right">
+                        <div class="slide-content sixth">
 
-                                </ul>
-                                <div style="text-align: center">
-                                    <a href = gallery.html class="nav-link" >Gallery demo</a>
-                                </div>
+                            <img src="images/backend-scheme.svg" height="400px">
+                            <div style="position: absolute; bottom: 0; left: 550px; top: 0; margin-bottom: 0">
+                                <h1 style="margin-top: 110px;">What is on back-end</h1>
                             </div>
                         </div>
                     </div>
+                    <div class="carousel-slide slide slide-right">
+                        <div class="slide-content seventh">
+                            <h1>Back-end tools </h1>
+                            <ul>
+                                <li><span>&#10004</span><i>Koa.js</i> for RESTful API</li>
+                                <li><span>&#10004</span><i>Knex.js</i> for DB management and interaction</li>
+                                <li><span>&#10004</span><i>Chai</i> for TDD
+                                </li>
+                                <li><span>&#10004</span><i>grunt-connect-proxy</i> to avoid CORS issues
+                                </li>
+                                <li><span>&#10004</span><i>PostgreSQL</i> as database
+                                </li>
 
-                    <div class="carousel-controls">
-                        <button class="slide-control control-prev" id="btnPrevious" data-controls="myCarousel"
-                                data-target="previous" disabled><span></span>
-                        </button>
-                        <button class="slide-control control-next" id="btnNext" data-controls="myCarousel"
-                                data-target="next"><span></span>
-                        </button>
+                            </ul>
+                            <div style="text-align: center">
+                                <a href=gallery.html class="nav-link">Gallery demo</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
+                <div class="carousel-controls">
+                    <button class="slide-control control-prev" id="btnPrevious" data-controls="myCarousel"
+                            data-target="previous" disabled><span></span>
+                    </button>
+                    <button class="slide-control control-next" id="btnNext" data-controls="myCarousel"
+                            data-target="next"><span></span>
+                    </button>
                 </div>
                 <div class="carousel-progress">
                     <div class="progress-wrapper">
@@ -202,7 +207,9 @@
 
                 </div>
             </div>
+
         </div>
+    </div>
 
 
 </section>
