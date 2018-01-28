@@ -1,9 +1,13 @@
 {
   "name": "gallery-layout",
   "version": "0.1.0",
+  "engines": {
+    "node": "9.4.0"
+  },
   "scripts": {
     "start": "node ./src/server/index.js",
-    "test": "node node_modules/mocha/bin/_mocha"
+    "test": "node node_modules/mocha/bin/_mocha",
+    "postinstall": "knex migrate:latest --env prod && knex seed:run --env prod"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",

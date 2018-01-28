@@ -22,5 +22,15 @@ module.exports = {
         seeds: {
             directory: path.join(BASE_PATH, 'seeds/dev')
         }
+    },
+    prod: {
+        client: 'pg',
+        connection: process.env.DATABASE_URL,
+        migrations: {
+            directory: path.join(BASE_PATH, 'migrations')
+        },
+        seeds: {
+            directory: path.join(BASE_PATH, 'seeds/dev')
+        }
     }
 };

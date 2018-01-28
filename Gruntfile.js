@@ -8,10 +8,9 @@ module.exports = function (grunt) {
                 options: {
                     port: 8000,
                     hostname: 'localhost',
-
-                    open: true,
-
-
+                    open: {
+                        target: 'http://localhost:8000/public'
+                    },
                     middleware: function (connect, options, defaultMiddleware) {
                         return [proxySnippet].concat(defaultMiddleware);
                     }
@@ -29,7 +28,7 @@ module.exports = function (grunt) {
                 options: {
                 },
                 files: {
-                    'css/styles.css': 'styles.scss'
+                    'public/css/styles.css': 'styles.scss'
                 }
             }
         },
@@ -42,7 +41,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    "css/styles.css": "css/styles.css"
+                    "public/css/styles.css": "public/css/styles.css"
                 }
             }
         },
@@ -52,7 +51,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    "css/styles.css": "css/styles.css"
+                    "puplic/css/styles.css": "public/css/styles.css"
                 }
             }
         },
@@ -61,7 +60,7 @@ module.exports = function (grunt) {
                 livereload: true
             },
             html: {
-                files: ['index.html']
+                files: ['public/index.html']
             },
             sass: {
                 options: {
