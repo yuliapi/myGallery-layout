@@ -260,11 +260,14 @@ form {
 
 .last-row {
   display: grid;
-  margin: auto; }
+  margin: auto;
+  position: relative; }
   @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .last-row .box {
-      width: 100%;
-      margin: 10px 0; } }
+    .last-row {
+      right: calc(10px*3 + 4px); }
+      .last-row .box {
+        width: 100%;
+        margin: 10px 0; } }
   @media only screen and (min-width: 1200px) {
     .last-row {
       grid-template-areas: "left right";
@@ -453,7 +456,7 @@ form {
     line-height: 30px;
     margin-right: 10px; }
   .box-header .title {
-    line-height: 30px;
+    line-height: 25px;
     display: inline-block; }
 
 .box-header.small .title {
@@ -509,7 +512,7 @@ form {
         line-height: 30px;
         margin-right: 10px; }
       .vertical .box-header .title {
-        line-height: 30px;
+        line-height: 25px;
         display: inline-block; } }
 
 /**********************************************IndexPage styling************************************/

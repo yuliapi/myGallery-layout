@@ -4,7 +4,7 @@ const landscapeIsDefault = 'landscape';
 const smallScreenRowCount = 3;
 const largeScreenRowCount = 5;
 const itemsInPeriod = 15;
-const lastRowWidthMediumScreen = '640px'; //counted from sass $horizontal-box-width + $box-vert-width + 2*$base-margin
+const lastRowWidthMediumScreen = '650px'; //counted from sass $horizontal-box-width + $box-vert-width + 2*$base-margin
 const colorScheme = {
     '$green-grass': '#3ACC00',
     '$aqua-light': '#0ACCAB',
@@ -25,7 +25,7 @@ const lastRowContainer = document.getElementById("gallery-last-row");
 let totalEntries;
 
 let allEntries;
-
+let extraRow;
 let maxHeaderLength = 20;
 let viewport;
 window.onload = function () {
@@ -89,6 +89,26 @@ class DisplayUtils {
         return viewport < smallBreak
     }
 
+    static getTotalModulus(count) {
+        return (allEntries.length % itemsInPeriod) % count;
+    }
+
+    static needExtraRow () {
+      let totalModulus;
+        if (DisplayUtils.isViewportSmall()) {
+            totalModulus =  this.getTotalModulus(smallScreenRowCount);
+            if (totalModulus < smallScreenRowCount) {
+                 return true;
+            }
+        } else if (DisplayUtils.isViewportLarge()) {
+            totalModulus = this.getTotalModulus(largeScreenRowCount);
+            if (totalModulus < largeScreenRowCount) {
+                return true;
+            }
+        }else {
+          return false
+        }
+    }
     static createClasses(n, mod) {
         let t;
         if (n < itemsInPeriod) {
@@ -195,48 +215,44 @@ class DisplayUtils {
 }
 
 class DisplayEntry {
-    constructor(entry, totalEntriesCount) {
+    constructor(entry) {
         this.entry = entry;
         this.entryNumber = this.entry.counter + 1;
-        this.totalEntriesCount = totalEntriesCount;
+
         this.modulus = this.entryNumber % itemsInPeriod; // is used to determine every 1, 2, 3 ... 15 gallery-item
         this.template = document.getElementById('galleryItemInner').innerHTML;
+
     }
 
-    display(generalContainer, lastRowContainer) {
+    display() {
         let totalModulus = 0;
-        let needExtraRow = false;
+
         if (DisplayUtils.isViewportSmall()) {
-            totalModulus = (this.totalEntriesCount % itemsInPeriod) % smallScreenRowCount;
-            if (totalModulus < smallScreenRowCount) {
-                needExtraRow = true;
-            }
+            totalModulus = DisplayUtils.getTotalModulus(smallScreenRowCount);
         }
         if (DisplayUtils.isViewportLarge()) {
-            totalModulus = (this.totalEntriesCount % itemsInPeriod) % largeScreenRowCount;
-            if (totalModulus < largeScreenRowCount) {
-                needExtraRow = true;
-            }
+            totalModulus = DisplayUtils.getTotalModulus(largeScreenRowCount);
         }
 
-        if (needExtraRow && this.entry.counter >= this.totalEntriesCount - totalModulus) {
+        if (extraRow && this.entry.counter >= allEntries.length - totalModulus) {
             if (generalContainer.clientWidth && DisplayUtils.isViewportLarge()) {
                 lastRowContainer.style.width = generalContainer.clientWidth + "px";
             } else if (DisplayUtils.isViewportSmall()) {
                 lastRowContainer.style.width = lastRowWidthMediumScreen;
             }
+
             let wrapper = DisplayUtils.createNode('div', "gallery-item");
-            this.addInner(wrapper, this.modulus, this.entryNumber);
+            this.addInner(wrapper, true);
             lastRowContainer.appendChild(wrapper);
         } else {
             let classes = DisplayUtils.createClasses(this.entryNumber, this.modulus);
             let wrapper = DisplayUtils.createNode('div', classes);
-            this.addInner(wrapper, this.modulus, this.entryNumber);
+            this.addInner(wrapper, false);
             generalContainer.appendChild(wrapper);
         }
     }
 
-    addInner(parent) {
+    addInner(parent, lastRow) {
         parent.innerHTML = this.template;
         let dimensions;
         //*****************Adding card header content*************************//
@@ -254,7 +270,12 @@ class DisplayEntry {
         //*****************Adding card photo*********************************//
 
         if (this.entry.photo && this.entry.photo.length > 0) {
-            dimensions = DisplayUtils.getPhotoSize(this.entry.orientation, DisplayUtils.needToAdjust(this.modulus, this.entryNumber));
+            if (lastRow) {
+                dimensions = DisplayUtils.getPhotoSize(this.entry.orientation, false)
+            } else {
+                dimensions = DisplayUtils.getPhotoSize(this.entry.orientation, DisplayUtils.needToAdjust(this.modulus, this.entryNumber));
+            }
+
             let div = firstByClass(parent, 'box-content');
             div.classList.add("illustrated");
             const photoholder = document.createElement("div");
@@ -286,9 +307,6 @@ class DisplayEntry {
 }
 
 function addContent() {
-    // if (window.location.href.indexOf('index') !== -1) {
-    //     window.location.replace('gallery.html');
-    // }
     console.log('adding content');
     if (totalEntries !== 0) {
         totalEntries = document.getElementById("number").value;
@@ -300,23 +318,24 @@ function addContent() {
         SeverUtils.getAllEntries(totalEntries, function (data) {
             allEntries = data.data;
             // allEntries = shuffleArray(allEntries);
-
+            extraRow = DisplayUtils.needExtraRow();
             for (let i = 0; i < allEntries.length; i++) {
                 allEntries[i].counter = i;
                 let displayEntry = new DisplayEntry(allEntries[i], allEntries.length);
-                displayEntry.display(generalContainer, lastRowContainer);
+                displayEntry.display();
             }
         });
     }
 }
 
 function displayAllEntries() {
+    extraRow = DisplayUtils.needExtraRow();
     for (let i = 0; i < allEntries.length; i++) {
         allEntries[i].counter = i;
-        let displayEntry = new DisplayEntry(allEntries[i], allEntries.length);
-        displayEntry.display(generalContainer, lastRowContainer);
-    }
+        let displayEntry = new DisplayEntry(allEntries[i]);
+        displayEntry.display();    }
 }
+
 
 /************************************CAROUCEL****************************************************/
 class Slide {

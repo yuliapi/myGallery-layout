@@ -72,7 +72,7 @@ $lg-hor-push-left: calc(0px - #{$box-vert-width} - #{$base-margin} * 2);
     margin-right: $base-margin;
   }
   .title {
-    line-height: 30px;
+    line-height: 25px;
     display: inline-block;
   }
 }
@@ -330,7 +330,10 @@ form {
 .last-row {
   display: grid;
   margin: auto;
+  position: relative;
+
   @include adjust-content(medium-screen) {
+    right: calc(#{$base-margin}*3 + 4px);
     .box {
       width: 100%;
       margin: $base-margin 0;
