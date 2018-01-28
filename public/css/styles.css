@@ -275,7 +275,7 @@ form {
   position: relative; }
   @media only screen and (min-width: 800px) and (max-width: 1200px) {
     .last-row {
-      left: calc(10px + 2px*2.5); }
+      left: calc(10px + 2px * 2.5); }
       .last-row .box {
         width: 100%;
         margin: 10px 0; } }
@@ -546,12 +546,14 @@ form {
 /**********************************************IndexPage styling************************************/
 .carousel-wrapper {
   position: relative;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content; }
+  display: grid;
+  grid-template-areas: "top" "bottom";
+  grid-template-rows: auto auto; }
 
 .carousel-body {
-  height: calc(100vh - 150px); }
+  grid-area: top;
+  height: 450px;
+  margin-bottom: 40px; }
 
 .slide {
   position: fixed;
@@ -601,6 +603,7 @@ form {
     z-index: 100; }
 
 .carousel-progress {
+  grid-area: bottom;
   overflow: hidden;
   display: -webkit-box;
   display: flex;
@@ -646,7 +649,6 @@ form {
 
 .carousel-controls {
   position: fixed;
-  top: 85px;
   width: 100%;
   height: 450px;
   display: grid;
