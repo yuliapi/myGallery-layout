@@ -557,9 +557,7 @@ form {
   position: fixed;
   right: 0;
   transition: all 1s ease-in-out;
-  height: inherit;
-  min-height: 400px;
-  max-height: 450px;
+  height: 450px;
   box-sizing: border-box;
   padding: 10px;
   padding-left: 30px;
@@ -650,9 +648,7 @@ form {
   position: fixed;
   top: 85px;
   width: 100%;
-  height: calc(100vh - 165px);
-  min-height: 400px;
-  max-height: 450px;
+  height: 450px;
   display: grid;
   grid-template-areas: 'left center right';
   grid-template-columns: 50px 1fr 50px;
