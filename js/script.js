@@ -73,8 +73,12 @@ class SeverUtils {
 }
 
 class DisplayUtils {
+
     static clearGallery() {
-        document.getElementById("myGallery").innerHTML = "";
+        let gallery = document.getElementById("myGallery");
+        if (gallery) {
+            gallery.innerHTML = ""
+        }
         let lastRow = document.getElementById("gallery-last-row");
         if (lastRow) {
             lastRow.innerHTML = ""
@@ -282,9 +286,9 @@ class DisplayEntry {
 }
 
 function addContent() {
-    if (window.location.href.indexOf('index') !== -1) {
-        window.location.replace('gallery.html');
-    }
+    // if (window.location.href.indexOf('index') !== -1) {
+    //     window.location.replace('gallery.html');
+    // }
     console.log('adding content');
     if (totalEntries !== 0) {
         totalEntries = document.getElementById("number").value;
@@ -341,6 +345,7 @@ class Carousel {
         for (let s of this.slides) {
             this.modifiedSlides.push(new Slide(s))
         }
+        this.controls = this.element.getElementsByClassName('slide-control');
 
         this.bullets = this.element.getElementsByClassName('progress-bullet');
         this.links = this.allLinks();
@@ -371,17 +376,31 @@ class Carousel {
     }
 
     nextSlide() {
-
+        if (this.currentActiveNumber === 0) {
+            this.switchDisabled('previous', false);
+        }
         if (this.currentActiveNumber !== this.modifiedSlides.length - 1) {
             this.switchActive(this.currentActiveNumber + 1);
+
             this.currentActiveNumber++;
+
+            if (this.currentActiveNumber === this.modifiedSlides.length - 1) {
+                this.switchDisabled('next', true);
+            }
         }
     }
 
     prevSlide() {
+        if ((this.currentActiveNumber + 1) === this.modifiedSlides.length) {
+            this.switchDisabled('next', false);
+        }
         if (this.currentActiveNumber !== 0) {
             this.switchActive(this.currentActiveNumber - 1);
             this.currentActiveNumber--;
+        }
+        if (this.currentActiveNumber === 0) {
+            this.switchDisabled('previous', true);
+
         }
     }
 
@@ -431,6 +450,15 @@ class Carousel {
         }
         this.bullets[targetNumber].classList.add('active');
     }
+
+    switchDisabled(target, value) {
+        for (let c of this.controls) {
+            if (c.dataset.target === target) {
+                c.disabled = value
+            }
+        }
+    }
+
 }
 
 

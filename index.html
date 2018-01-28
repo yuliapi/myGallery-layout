@@ -14,14 +14,14 @@
     <nav>
         <ul>
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href=gallery.html>Gallery</a></li>
+            <li><a href=gallery.html>Gallery demo</a></li>
         </ul>
     </nav>
-    <form onsubmit="return validate()">
-        Select between 1 and 100
-        <input id="number" required type="number" name="quantity" min="1" max="100">
-        <button type="submit">Submit</button>
-    </form>
+    <!--<form onsubmit="return validate()">-->
+        <!--Select between 1 and 100-->
+        <!--<input id="number" required type="number" name="quantity" min="1" max="100">-->
+        <!--<button type="submit">Submit</button>-->
+    <!--</form>-->
 
 </header>
 
@@ -36,9 +36,12 @@
                             <h1>What and why?</h1>
                             <p>Blog template to display records with graphical and textual information in elegant and
                                 non-dull manner. </p>
-                            <p> This project demonstrates bunch of approaches used to provide good user experience. Also
-                                contains a
-                                back-end part to get posts over the REST interface.</p>
+                            <p> This project demonstrates bunch of approaches used to provide good user experience.</p>
+                            <p>Also contains back-end part to get posts over the REST interface.</p>
+                            <div style="text-align: center">
+                                <a href = gallery.html class="nav-link" >Gallery demo</a>
+                            </div>
+
 
                         </div>
                     </div>
@@ -49,8 +52,7 @@
                                 <h1>Gallery layout</h1>
                                 <p class="small">Layout should look like Masonry, BUT... instead of placing elements in
                                     optimal
-                                    position based on available vertical space we fit items to strict positioned
-                                    containers</p>
+                                    position based on available vertical space we display items in chronological order  and fit them to strict positioned boxes</p>
                                 <p class="small">Than we move containers to make appearance not such ordered, for
                                     example: item 6
                                     moved to left and block of two horizontal boxes - to center</p>
@@ -148,13 +150,16 @@
                                     </li>
 
                                 </ul>
+                                <div style="text-align: center">
+                                    <a href = gallery.html class="nav-link" >Gallery demo</a>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="carousel-controls">
                         <button class="slide-control control-prev" id="btnPrevious" data-controls="myCarousel"
-                                data-target="previous"><span></span>
+                                data-target="previous" disabled><span></span>
                         </button>
                         <button class="slide-control control-next" id="btnNext" data-controls="myCarousel"
                                 data-target="next"><span></span>
@@ -164,7 +169,7 @@
                 </div>
                 <div class="carousel-progress">
                     <div class="progress-wrapper">
-                        <button class="slide-control control-prev" data-controls="myCarousel"
+                        <button class="slide-control control-prev" disabled data-controls="myCarousel"
                                 data-target="previous"><span></span>
                         </button>
                         <ul>
