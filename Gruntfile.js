@@ -9,8 +9,9 @@ module.exports = function (grunt) {
                     port: 8000,
                     hostname: 'localhost',
                     open: {
-                        target: 'http://localhost:8000/public'
+                        target: 'http://localhost:8000'
                     },
+                    base: "public",
                     middleware: function (connect, options, defaultMiddleware) {
                         return [proxySnippet].concat(defaultMiddleware);
                     }

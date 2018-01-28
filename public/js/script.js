@@ -307,13 +307,13 @@ class DisplayEntry {
 }
 
 function addContent() {
-    console.log('adding content');
-    if (totalEntries !== 0) {
+    if (document.getElementById("number") && totalEntries !== 0) {
         totalEntries = document.getElementById("number").value;
     }
 
     DisplayUtils.clearGallery();
 
+    console.log('adding content, totalEntries');
     if (totalEntries > 0) {
         SeverUtils.getAllEntries(totalEntries, function (data) {
             allEntries = data.data;
