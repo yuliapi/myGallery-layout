@@ -4,7 +4,7 @@ const landscapeIsDefault = 'landscape';
 const smallScreenRowCount = 3;
 const largeScreenRowCount = 5;
 const itemsInPeriod = 15;
-const lastRowWidthMediumScreen = '650px'; //counted from sass $horizontal-box-width + $box-vert-width + 2*$base-margin
+const lastRowWidthMediumScreen = '620px'; //counted from sass $horizontal-box-width + $box-vert-width + 2*$base-margin
 const colorScheme = {
     '$green-grass': '#3ACC00',
     '$aqua-light': '#0ACCAB',

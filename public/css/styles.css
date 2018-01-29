@@ -239,9 +239,7 @@ form {
 
 /*****************************************Gallery layout****************************/
 .gallery {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 370px;
   margin: auto;
   display: grid; }
   @media only screen and (min-width: 800px) and (max-width: 1200px) {
@@ -274,11 +272,9 @@ form {
   margin: auto;
   position: relative; }
   @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .last-row {
-      left: calc(10px + 2px * 2.5); }
-      .last-row .box {
-        width: 100%;
-        margin: 10px 0; } }
+    .last-row .box {
+      width: 100%;
+      margin: 10px 0; } }
   @media only screen and (min-width: 1200px) {
     .last-row {
       grid-template-areas: "left right";
@@ -307,11 +303,6 @@ form {
         padding-left: 15px;
         width: calc(calc(350px + 250px / 2 + 10px) - 153px - 40px); } }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
-  .item3, .item9, .item15 {
-    -webkit-transform: translate(calc(10px * 2.5 + 2px * 3), 0);
-            transform: translate(calc(10px * 2.5 + 2px * 3), 0); } }
-
 @media only screen and (min-width: 800px) {
   .vertical,
   .vertical-normal {
@@ -327,8 +318,8 @@ form {
             transform: translate(calc(0px - 350px - 10px * 2 - 2px), 0); }
 
   .push-right {
-    -webkit-transform: translate(calc(250px + 10px * 5 + 2px), 0);
-            transform: translate(calc(250px + 10px * 5 + 2px), 0); }
+    -webkit-transform: translate(calc(250px + 10px * 2 + 2px), 0);
+            transform: translate(calc(250px + 10px * 2 + 2px), 0); }
 
   .item1, .item2, .item7, .item8, .item13, .item14, .item5, .item6, .item11, .item12 {
     display: -webkit-box;

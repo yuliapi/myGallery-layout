@@ -38,7 +38,7 @@ $cake-pink: #ffc9e2;
 //$sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
 //$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} *2);
 $sm-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2 - #{$border-width});
-$sm-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} * 5 + #{$border-width});
+$sm-hor-push-right: calc(#{$box-vert-width} + #{$base-margin} * 2 + #{$border-width});
 //$sm-hor-push-right: calc(#{$horizontal-box-width} + #{$base-margin} * 2);
 $lg-vert-push-left: calc(0px - #{$horizontal-box-width} - #{$base-margin} * 2);
 $lg-vert-push-right: calc(#{$horizontal-box-width} + #{$base-margin} * 2);
@@ -308,7 +308,7 @@ form {
 
 /*****************************************Gallery layout****************************/
 .gallery {
-  width: fit-content;
+  width: 370px;
   margin: auto;
   display: grid;
   @include adjust-content(medium-screen) {
@@ -345,7 +345,6 @@ form {
   position: relative;
 
   @include adjust-content(medium-screen) {
-    left: calc(#{$base-margin} + #{$border-width} * 2.5);
     .box {
       width: 100%;
       margin: $base-margin 0;
@@ -386,10 +385,10 @@ form {
 
   }
 }
-
-.item3, .item9, .item15 {
-  @include adjust-transform()
-}
+//
+//.item3, .item9, .item15 {
+//  @include adjust-transform()
+//}
 
 @media only screen and (min-width: $break-small) {
   .vertical,
