@@ -13,16 +13,16 @@ To make changes to the database schema
 knex migrate:make name_of_migration_step 
 ````
 
-Add require changes to generated migration script
+2. Add require changes to generated migration script
 http://knexjs.org/#Schema
 
-Check if seeds and tests need to be changed according to new schema
+3. Check if seeds and tests need to be changed according to new schema
 
 ````
 knex migrate:latest --env development
 ````
 
-Run tests 
+4. Run tests 
 ````
 $npm test
 ````
