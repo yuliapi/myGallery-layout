@@ -246,7 +246,10 @@ form {
     .gallery {
       grid-template-areas: "left right";
       grid-template-columns: auto auto;
-      grid-auto-flow: column; } }
+      grid-auto-flow: column;
+      width: -webkit-max-content;
+      width: -moz-max-content;
+      width: max-content; } }
   @media only screen and (min-width: 1200px) {
     .gallery {
       grid-template-areas: "left middle right";

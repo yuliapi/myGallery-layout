@@ -315,6 +315,7 @@ form {
     grid-template-areas: "left right";
     grid-template-columns: auto auto;
     grid-auto-flow: column;
+    width: max-content;
     //min-width: max-content;
   }
   @include adjust-content(large-screen) {

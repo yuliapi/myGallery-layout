@@ -39,7 +39,7 @@ window.onload = function () {
     }
 };
 
-$(window).resize(function () {
+function resize() {
     viewport = window.innerWidth;
     DisplayUtils.clearGallery();
     if (allEntries && allEntries.length) {
@@ -47,8 +47,7 @@ $(window).resize(function () {
     } else {
         addContent()
     }
-
-});
+}
 
 function validate() {
     console.log(this);
