@@ -30,3 +30,5 @@ To process frontend static content and run content watcher execute
 ````
 $grunt
 ````
+
+To start server

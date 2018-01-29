@@ -40,6 +40,7 @@ window.onload = function () {
 };
 
 function resize() {
+
     viewport = window.innerWidth;
     DisplayUtils.clearGallery();
     if (allEntries && allEntries.length) {
