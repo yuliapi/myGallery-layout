@@ -566,7 +566,7 @@ form {
       .slide.slide-right.next {
         right: calc(-710px + 100px); }
       .slide.slide-left.previous {
-        right: calc(100vw - 100px); }
+        right: calc(100vw - 100px - 15px); }
       .slide.active {
         right: calc((50vw - 710px / 2)); } }
   @media only screen and (min-width: 800px) and (max-width: 1200px) {
@@ -575,7 +575,7 @@ form {
       .slide.slide-right.next {
         right: calc(-710px + 50px); }
       .slide.slide-left.previous {
-        right: calc(100vw - 50px); }
+        right: calc(100vw - 50px - 15px); }
       .slide.active {
         right: calc((50vw - 710px / 2)); } }
   @media only screen and (max-width: 800px) {
@@ -584,7 +584,7 @@ form {
       .slide.slide-right.next {
         right: calc(-inherit + 0px); }
       .slide.slide-left.previous {
-        right: calc(100vw - 0px); }
+        right: calc(100vw - 0px - 15px); }
       .slide.active {
         right: calc((50vw - inherit / 2)); } }
   .slide.slide-right {

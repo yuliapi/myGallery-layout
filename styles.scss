@@ -642,7 +642,7 @@ form {
     right: calc(-#{$width} + #{$side-width});
   }
   &.slide-left.previous {
-    right: calc(100vw - #{$side-width});
+    right: calc(100vw - #{$side-width} - 15px);
 
   }
   &.active {

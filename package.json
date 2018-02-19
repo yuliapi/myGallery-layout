@@ -7,13 +7,13 @@
   "scripts": {
     "start": "node ./src/server/index.js",
     "test": "node node_modules/mocha/bin/_mocha",
-    "postinstall": "knex migrate:latest --env prod"
+    "postinstall": "knex migrate:latest --env development"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",
     "chai": "^4.1.1",
     "chai-http": "^3.0.0",
-    "grunt": "~0.4.5",
+    "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.4",
     "grunt-connect-proxy": "^0.2.0",
     "grunt-contrib-connect": "^1.0.2",
